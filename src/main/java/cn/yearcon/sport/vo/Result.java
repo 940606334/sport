@@ -1,8 +1,6 @@
 package cn.yearcon.sport.vo;
 
 import cn.yearcon.sport.enums.ResultEnum;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.sun.net.httpserver.Authenticator;
 import lombok.Data;
 
 import java.io.Serializable;
