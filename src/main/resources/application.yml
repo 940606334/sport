@@ -1,0 +1,18 @@
+server:
+  port: 80
+  context-path: /sport
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: YEKDBTEST
+    password: test123456
+    url: jdbc:mysql://192.168.80.174:3306/jeeplus_schema?useUnicode=true&characterEncoding=utf-8
+  jpa:
+    show-sql: true
+
+
+wechat:
+  test: test
+
+
+
