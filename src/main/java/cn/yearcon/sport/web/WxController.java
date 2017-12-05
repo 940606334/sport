@@ -80,7 +80,7 @@ public class WxController {
         log.info("url={}", url);
 
         return "redirect:" + url;
-
+        //return Result.success(url);
     }
 
     @RequestMapping("/getOpenid")

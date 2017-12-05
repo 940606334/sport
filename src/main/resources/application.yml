@@ -9,10 +9,15 @@ spring:
     url: jdbc:mysql://192.168.80.174:3306/jeeplus_schema?useUnicode=true&characterEncoding=utf-8
   jpa:
     show-sql: true
-
-
+  mvc:
+    static-path-pattern: /**
+devtools:
+  restart:
+    enabled: true
+    additional-paths: src/main/java
 wechat:
   test: test
+
 
 
 
