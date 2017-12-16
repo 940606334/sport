@@ -17,12 +17,11 @@ public class CookieUtil {
      * @param response
      * @param name cookie的名称
      * @param value cookie值
-     * @param maxAge 过期时间
      */
-    public static void set(HttpServletResponse response, String name, String value, int maxAge) {
+    public static void set(HttpServletResponse response, String name, String value) {
         Cookie cookie = new Cookie(name, value);
         cookie.setPath("/");
-        cookie.setMaxAge(maxAge);
+        //cookie.setMaxAge(maxAge);
         response.addCookie(cookie);
     }
 

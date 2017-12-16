@@ -1,11 +1,14 @@
 package cn.yearcon.sport.entity;
 
+import lombok.Data;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -13,74 +16,22 @@ import java.util.Objects;
  * @create 2017-12-04 8:36
  **/
 @Entity
+@Data
 @Table(name = "sports_secret", schema = "jeeplus_schema", catalog = "")
 public class SportsSecretEntity {
+    @Id
     private String appid;
-    private Timestamp addtime;
-    private Timestamp edittime;
+    private Date addtime;
+    private Date edittime;
+    @Column(name = "access_token")
     private String accessToken;
+    @Column(name = "expires_in")
     private Integer expiresIn;
     private String secret;
+    @Column(name = "jsapi_ticket")
+    private String jsapiTicket;
 
-    @Id
-    @Column(name = "appid")
-    public String getAppid() {
-        return appid;
-    }
 
-    public void setAppid(String appid) {
-        this.appid = appid;
-    }
-
-    @Basic
-    @Column(name = "addtime")
-    public Timestamp getAddtime() {
-        return addtime;
-    }
-
-    public void setAddtime(Timestamp addtime) {
-        this.addtime = addtime;
-    }
-
-    @Basic
-    @Column(name = "edittime")
-    public Timestamp getEdittime() {
-        return edittime;
-    }
-
-    public void setEdittime(Timestamp edittime) {
-        this.edittime = edittime;
-    }
-
-    @Basic
-    @Column(name = "access_token")
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    @Basic
-    @Column(name = "expires_in")
-    public Integer getExpiresIn() {
-        return expiresIn;
-    }
-
-    public void setExpiresIn(Integer expiresIn) {
-        this.expiresIn = expiresIn;
-    }
-
-    @Basic
-    @Column(name = "secret")
-    public String getSecret() {
-        return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
 
     @Override
     public boolean equals(Object o) {

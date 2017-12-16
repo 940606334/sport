@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"/>
+    <title>修改团购申请信息</title>
+    <link rel="stylesheet" href="../css/weui-master/weui.css"/>
+    <link rel="stylesheet" href="../css/sports/groupbuyedit.css"/>
+    <!--<link rel="stylesheet" href="../css/need/layer.css"/>-->
+</head>
+<body>
+
+<div class="container" id="container">
+    <div class="page flex js_show">
+        <div class="personal-head ">
+            <div class="weui-flex">
+                <div style="margin-left:30px; margin-top:25px; text-align:right;">
+                    <img class="img" th:src="${user.headimgurl}" alt="" onerror="javascript:this.src='../img/user-photo.png';"/>
+                </div>
+                <div style=" margin-left:30px; margin-top:25px; text-align:left; color:#ffffff;">
+                    <p style="height:33px; line-height:33px; vertical-align:middle;color:#ffffff;">
+                        <span style="font-size:18px;font-family:'Microsoft YaHei UI'" th:text="${user.nickname}"/>
+                    </p>
+                    <p style="height:33px; line-height:33px; vertical-align:middle; font-size:16px; font-family:'Microsoft YaHei UI';">
+                        <span class="user-id">LV1</span><em class="user-tip">积分卡</em>
+                    </p>
+                    <!--<p style="color:#ffffff;height:33px; line-height:33px; vertical-align:middle; font-size:16px; font-family:'Microsoft YaHei UI'" th:text="${user.mobile}"/>-->
+                </div>
+            </div>
+            <div class="weui-flex" style=" margin-top:16px; line-height:50px; height:50px; text-align:left; background-color:#3399cc;color:#ffffff; vertical-align:bottom;">
+                <span style="margin-left:20px; margin-top:8px; ">
+                    <img src="../img/nt1.png" style="height:25px;"/>
+                </span>
+                <div style="font-size:14px; padding-left:5px; color:#ffffff;   " class="wrap" id="auto-scroll">
+                <ul style="margin-top: 0px; overflow:hidden;  height:35px;">
+                    <li>匠心为你为你每一步</li>
+                    <l1>只为你生活中的重要一步</l1>
+                </ul>
+                </div>
+            </div>
+        </div>
+        <div class="weui-flex" style="padding-bottom:10px; padding-top:10px; background-color: #FFFFFF;  margin-top:10px;">
+            <div class="weui-flex__item" onclick="javascipt:window.location.href='/sport/user/getIntegral'">
+                <div class="placeholder">
+                    <p><img src="../img/m1.png" style="width:50px;"/></p>
+                    <p>积分</p>
+                </div>
+            </div>
+            <div class="weui-flex__item" onclick="javascipt:window.location.href='#'">
+                <div class="placeholder">
+                    <p><img src="../img/m2.png" style="width:50px;"/></p>
+                    <p>附近门店</p>
+                </div>
+            </div>
+            <div class="weui-flex__item" onclick="javascipt:window.location.href='/sport/user/getBill'">
+                <div class="placeholder">
+                    <p><img src="../img/m3.png" style="width:50px;"/></p>
+                    <p>消费账单</p>
+                </div>
+            </div>
+        </div>
+        <form action="/sport/user/saveGroupbuy" method="post" id="groupbuyForm">
+            <!--<input type="hidden" th:value="${user.id}" name="id"/>-->
+            <input type="hidden" th:value="${user.vipid}" name="vipid"/>
+            <input type="hidden" th:value="${user.webid}" name="webid"/>
+            <!--<input type="hidden" th:value="${groupbuy.addtime}" name="addtime"/>-->
+        <div class="weui-cells ">
+            <a class="weui-cell weui-cell_access" href="javascript:;" id="showIOSDialog2">
+            <div class="weui-cell__bd"><p>团购需知</p></div>
+            <div class="weui-cell__ft" style="color:#ffcc66;">团购申请必看</div>
+            </a>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                <label class="weui-label">手机</label>
+                </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number"  maxlength="20" placeholder="请输入您联系电话" id="mobile" name="mobile"/>
+            </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                <label class="weui-label">地址</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text"  maxlength="250" placeholder="请输入寄送地址" id="address" name="address"/>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">真实姓名</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" th:value="${user.nickname}" maxlength="25" placeholder="请输入真实姓名" id="truename" name="truename"/>
+                </div>
+            </div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" id="note" name="note" placeholder="请输入备注说明" rows="3" />
+                        <div class="weui-textarea-counter"><span id="spanVNOTE">0</span>/500</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+        <div class="weui-btn-area" style="margin-bottom:50px;">
+            <a class="weui-btn weui-btn_primary" style="background-color:#3399cc;" href="javascript:" id="sumbitGroupBuy">提交申请</a>
+        </div>
+    </div>
+
+    <div id="dialogs">
+
+        <!--BEGIN dialog2-->
+        <div class="js_dialog" id="iosDialog2" style="display: none;">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__hd"><strong class="weui-dialog__title">团购需知</strong></div>
+                <div class="weui-dialog__bd">
+                    <p th:text="${pageContent}"></p>
+
+                </div>
+                <div class="weui-dialog__ft">
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary"
+                        id="closeDialog">知道了</a>
+                </div>
+            </div>
+
+        </div>
+            <!--END dialog2-->
+    </div>
+
+   <!-- <div id="loadingToast" style="display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content">数据加载中</p>
+        </div>
+    </div>-->
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="../js/layer/layer.js" rel="script"></script>
+    <script src="../js/sports/groupbuy.js" ></script>
+
+</div>
+
+</body>
+</html>

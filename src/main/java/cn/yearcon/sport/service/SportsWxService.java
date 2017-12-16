@@ -1,12 +1,18 @@
 package cn.yearcon.sport.service;
 
 import cn.yearcon.sport.entity.SportsWxEntity;
+import cn.yearcon.sport.entity.SysOfficeEntity;
 import cn.yearcon.sport.enums.ResultEnum;
 import cn.yearcon.sport.exception.SportException;
 import cn.yearcon.sport.repository.SportsWxRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.crypto.SecretKey;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author itguang
@@ -22,6 +28,10 @@ public class SportsWxService {
     @Autowired
     private SysOfficeService sysOfficeService;
 
+
+    @Autowired
+    private SportsWxService sportsWxService;
+
     public SportsWxEntity findByWebid(Integer webid){
         SportsWxEntity wxEntity = sportsWxRepository.findByWebid(webid);
         if (wxEntity==null){
@@ -32,5 +42,23 @@ public class SportsWxService {
 
     }
 
+    public Map<String,String> getAppid(HttpServletRequest request){
+        Map<String,String> map=new HashMap<>();
+        //1.得到请求的 服务器域名
+        String serverName = request.getServerName();
+        log.info("serverName={}", serverName);
+        SysOfficeEntity officeEntity = sysOfficeService.findOneByAddress(serverName);
+        String webid=officeEntity.getCode();
+        SportsWxEntity wxEntity = sportsWxService.findByWebid(Integer.parseInt(webid));
+
+        //2.通过域名查找 appid 和 appsecret
+        String appid = wxEntity.getAppid();
+        String appsecret = wxEntity.getSecret();
+        map.put("appid",appid);
+        map.put("secret",appsecret);
+        map.put("servername",serverName);
+        map.put("webid",webid);
+        return map;
+    }
 
 }

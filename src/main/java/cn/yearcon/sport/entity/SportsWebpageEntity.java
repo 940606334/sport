@@ -1,5 +1,7 @@
 package cn.yearcon.sport.entity;
 
+import lombok.Data;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,74 +14,18 @@ import java.util.Objects;
  * @create 2017-12-04 8:36
  **/
 @Entity
+@Data
 @Table(name = "sports_webpage", schema = "jeeplus_schema", catalog = "")
 public class SportsWebpageEntity {
-    private int id;
+    @Id
+    private Integer id;
     private String pagecode;
     private String imgurl;
     private String pagecontent;
     private String pageurl;
     private Integer webid;
 
-    @Id
-    @Column(name = "id")
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Basic
-    @Column(name = "pagecode")
-    public String getPagecode() {
-        return pagecode;
-    }
-
-    public void setPagecode(String pagecode) {
-        this.pagecode = pagecode;
-    }
-
-    @Basic
-    @Column(name = "imgurl")
-    public String getImgurl() {
-        return imgurl;
-    }
-
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
-    }
-
-    @Basic
-    @Column(name = "pagecontent")
-    public String getPagecontent() {
-        return pagecontent;
-    }
-
-    public void setPagecontent(String pagecontent) {
-        this.pagecontent = pagecontent;
-    }
-
-    @Basic
-    @Column(name = "pageurl")
-    public String getPageurl() {
-        return pageurl;
-    }
-
-    public void setPageurl(String pageurl) {
-        this.pageurl = pageurl;
-    }
-
-    @Basic
-    @Column(name = "webid")
-    public Integer getWebid() {
-        return webid;
-    }
-
-    public void setWebid(Integer webid) {
-        this.webid = webid;
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -2,12 +2,9 @@ package cn.yearcon.sport.entity;
 
 import lombok.Data;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -21,8 +18,9 @@ public class SportsFeedbackEntity {
 
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
-    private Timestamp addtime;
+    private Date addtime;
     private Timestamp audittime;
     private Integer auditstatus;
     private Integer vipid;

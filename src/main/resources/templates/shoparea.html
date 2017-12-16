@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"/>
+    <title>附近门店</title>
+    <link rel="stylesheet" href="css/weui-master/weui.css"/>
+    <link rel="stylesheet" href="css/ydui/ydui.css?rev=@@hash"/>
+</head>
+<body>
+<div class="container" id="container">
+
+    <div class="page panel js_show">
+
+        <div class="page__bd">
+            <div class="weui-panel weui-panel_access" id="list">
+                <div class="weui-panel__hd">离你最近的门店</div>
+                <div class="weui-panel__bd" id="store" style="display: none">
+                    <a href="javascript:void(0)" class="weui-media-box weui-media-box_appmsg" id="mapid">
+                        <input type="hidden" name="coordinate"/>
+                        <div class="weui-media-box__bd">
+                            <h4 class="weui-media-box__title name"/>
+                            <p class="weui-media-box__desc address"/>
+
+                            <p class="weui-media-box__desc phone" style="margin-top:5px;"/>
+                        </div>
+                        <div class="weui-media-box__hd">
+                            <p class="weui-media-box__desc"><img src="img/mpindex.png" alt="" style="width:30px; "/></p>
+                            <p class="weui-media-box__desc distance" style="margin-top:5px;" />
+                        </div>
+                    </a>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--<div id="loadingToast">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content">门店加载中</p>
+        </div>
+    </div>-->
+</div>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/jquery.cookie/1.4.1/jquery.cookie.js"></script>
+<script src="js/ydui/ydui.js"></script>
+<script src="js/sports/shoparea.js"></script>
+
+</body>
+</html>

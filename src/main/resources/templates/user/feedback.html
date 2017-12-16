@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>顾客心声</title>
+    <link rel="stylesheet" type="text/css" href="../css/default.css"/>
+    <link rel="stylesheet" href="../css/reset.css"/>
+    <!-- CSS reset -->
+    <link rel="stylesheet" href="../css/style.css"/>
+    <!-- Resource style -->
+    <style>
+        .cd-form {
+            width: 90%;
+            max-width: 600px;
+            margin: 0em auto;
+        }
+
+        .cd-form fieldset {
+            margin: 0;
+        }
+
+        .cd-form h4 {
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            /*font-size: 1.6rem;*/
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .cd-form h4 > p {
+            margin-bottom: 8px;
+        }
+
+        .cd-form input, .cd-form textarea, .cd-form select, .cd-form label {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+        }
+
+    </style>
+    <!--<link rel="stylesheet" href="http://test.yearcon.com/lib/layer/2.1/skin/layer.css" id="layui_layer_skinlayercss"
+          style=""/>-->
+</head>
+<body>
+
+
+<div class="container">
+
+    <div class="cd-form floating-labels" id="submitform">
+        <fieldset>
+            <div>
+                <h4>
+                    <p>感谢您一直以来对意尔康的大力支持！</p>
+                    <p>我们希望通过顾客心声了解您对购买商品的意见和建议，</p>
+                    <p>我们将阅读您提交的问题，</p>
+                    <p>不断提交产品的品质，</p>
+                    <p>真心感谢您的反馈！</p>
+                </h4>
+                <input id="HTYPEID2" type="hidden" value="1"/>
+                <ul class="cd-form-list">
+                    <li>
+                        <input type="radio" id="TYPEID_1" c="1" name="type" value="typename1" />
+                        <label for="TYPEID_1">我要建议</label>
+                    </li>
+                    <li>
+                        <input type="radio" id="TYPEID_2" c="2" name="type" value="typename2" />
+                        <label for="TYPEID_2">我要投诉</label>
+                    </li>
+
+                </ul>
+            </div>
+            <!--<input id="HTYPEID3" type="hidden" value="1"/>-->
+            <form action="/sport/user/saveFeedback" method="post" id="feedbackForm">
+                <div>
+                    <p class="cd-select icon">
+                        <select class="budget" name="typename" id="description">
+                            <!--<option value="">选择问题类型</option>-->
+                        </select>
+                    </p>
+                </div>
+                <div class="icon">
+                    <textarea class="message" placeholder="请您尽可能详细的描述您遇到的问题，方便小意跟踪解决" name="userask"
+                              id="userask"></textarea>
+                </div>
+            </form>
+            <div>
+                <input id="sendMsg" type="button" value="发送信息"/>
+            </div>
+
+        </fieldset>
+    </div>
+
+</div>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="../js/layer/layer.js" rel="script"></script>
+<script src="../js/sports/feedback.js"></script>
+<script src="../js/ydui/ydui.js"></script>
+
+</body>
+</html>

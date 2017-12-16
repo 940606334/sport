@@ -26,6 +26,6 @@ public class WechatUser {
     private Integer sexId;
     private String remark;
     private Integer groupId;
-
+    private String privilege;
 
 }

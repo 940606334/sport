@@ -1,34 +1,38 @@
 package cn.yearcon.sport.web;
 
-import cn.yearcon.sport.config.AppParamsConfig;
 import cn.yearcon.sport.dto.WechatUser;
-import cn.yearcon.sport.entity.SportsWxEntity;
-import cn.yearcon.sport.entity.SysOfficeEntity;
+import cn.yearcon.sport.entity.SportsSecretEntity;
+import cn.yearcon.sport.entity.SportsUsersEntity;
 import cn.yearcon.sport.enums.ResultEnum;
 import cn.yearcon.sport.exception.SportException;
+import cn.yearcon.sport.json.WxResult;
+import cn.yearcon.sport.service.SportsSecretService;
+import cn.yearcon.sport.service.SportsUserService;
 import cn.yearcon.sport.service.SportsWxService;
 import cn.yearcon.sport.service.SysOfficeService;
 import cn.yearcon.sport.utils.CookieUtil;
-import cn.yearcon.sport.vo.Result;
+import cn.yearcon.sport.utils.Sign;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author itguang
@@ -53,22 +57,19 @@ public class WxController {
     private SportsWxService sportsWxService;
 
 
+
     @RequestMapping("/authorize")
     public String authorize(HttpServletRequest request) {
 
 
         //1.得到请求的 服务器域名
-        String serverName = request.getServerName();
-        log.info("serverName={}", serverName);
-        SysOfficeEntity officeEntity = sysOfficeService.findOneByAddress(serverName);
-        SportsWxEntity wxEntity = sportsWxService.findByWebid(Integer.parseInt(officeEntity.getCode()));
+        Map<String,String> map=sportsWxService.getAppid(request);
 
 
         //2.通过域名查找 appid 和 appsecret
-        String appid = wxEntity.getAppid();
-        String appsecret = wxEntity.getSecret();
-
-
+        String appid = map.get("appid");
+        String appsecret = map.get("secret");
+        String serverName=map.get("servername");
         //3.构造微信网页授权 url
         String redirectUrl = "http://" + serverName + "/sport/wechat/getOpenid";
         wxMpInMemoryConfigStorage.setAppId(appid);
@@ -82,11 +83,14 @@ public class WxController {
         return "redirect:" + url;
         //return Result.success(url);
     }
+    @Autowired
+    private SportsUserService sportsUserService;
 
     @RequestMapping("/getOpenid")
     @ResponseBody
-    public Result getOpenid(@RequestParam("code") String code,
-                            HttpServletResponse response) {
+    public ModelAndView getOpenid(@RequestParam("code") String code,
+                                  HttpServletResponse response, Map<String,Object> map,
+                                  HttpServletRequest request) {
 
         //2.获得accesstoken()
         WxMpUser wxMpUser = null;
@@ -104,8 +108,38 @@ public class WxController {
         BeanUtils.copyProperties(wxMpUser, wechatUser);
 
         log.info("wxMpUser={}", wxMpUser.toString());
-        return Result.success(wechatUser);
+        Cookie cookie=CookieUtil.get(request,"vipid");
+        String vipid=cookie.getValue();
+
+        SportsUsersEntity sportsUsersEntity = sportsUserService.findByVipid(Integer.parseInt(vipid));
+        if(sportsUsersEntity==null){
+            Map<String,String> appmap=sportsWxService.getAppid(request);
+            String webid=appmap.get("webid");
+            sportsUsersEntity=sportsUserService.checkvip(wechatUser,vipid,webid);
+        }
+        map.put("sportsUsersEntity",sportsUsersEntity);
+
+        return new ModelAndView("index",map);
     }
+    @Autowired
+    private SportsSecretService sportsSecretService;
+
+    /**
+     * 获取微信授权api*/
+    @RequestMapping(value = "getApi",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, String> getApi(HttpServletRequest request,String url){
+        Map<String,String> map=sportsWxService.getAppid(request);
+        //String url="http://zongbubeidan.yeksports.com/sport/reg";//request.getRequestURL().toString();
+        System.out.println("url:"+url);
+        String appid=map.get("appid");
+        SportsSecretEntity sportsSecretEntity=sportsSecretService.findOne(appid);
+        Map<String, String> ret = new Sign().sign(sportsSecretEntity.getJsapiTicket(), url);
+        ret.put("appid",appid);
+        return ret;
+    }
+
+
 
 
 }

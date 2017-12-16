@@ -1,23 +1,71 @@
 server:
-  port: 80
+  port: 8002
   context-path: /sport
+  session:
+    cookie:
+      max-age: 30
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    username: YEKDBTEST
-    password: test123456
-    url: jdbc:mysql://192.168.80.174:3306/jeeplus_schema?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: abc123
+    url: jdbc:mysql://10.3.1.80:3306/sports?useUnicode=true&characterEncoding=utf-8
   jpa:
     show-sql: true
   mvc:
     static-path-pattern: /**
-devtools:
-  restart:
-    enabled: true
-    additional-paths: src/main/java
-wechat:
-  test: test
+  thymeleaf:
+    cache: false
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 0
 
+interfaceUrl: http://10.3.1.52:8001/yek_api/send.ashx?sign=y781821fa56a7698td
+groupbuyPagecode: 4
+cardtype: 积分卡
+aboutusPagecode: 2
+classroomPagecode: 3
+privilegePagecode: 1
+#http:
+#  maxTotal: 100
+#  defaultMaxPerRoute: 20
+#  connectTimeout: 1000
+#  connectionRequestTimeout: 500
+#  socketTimeout: 10000
+#  staleConnectionCheckEnabled: true
 
-
-
+domainName: ["huaianwx.yeksports.com",
+             "hefeiwx.yeksports.com",
+             "shanxiwx.yeksports.com",
+             "zhuzhouwx.yeksports.com",
+             "yiwuwx.yeksports.com",
+             "shishiwx.yeksports.com",
+             "beijingwx.yeksports.com",
+             "wuhanwx.yeksports.com",
+             "zhengzhouwx.yeksports.com",
+             "nanchangwx.yeksports.com",
+             "tianjinwx.yeksports.com",
+             "shanghaiwx.yeksports.com",
+             "wenzhouwx.yeksports.com",
+             "kunmingwx.yeksports.com",
+             "guiyangwx.yeksports.com",
+             "zongbubeidan.yeksports.com",
+             "dianshangwx.yeksports.com",
+             "suzhouwx.yeksports.com",
+             "guangzhouwx.yeksports.com",
+             "xianwx.yeksports.com",
+             "xuzhouwx.yeksports.com",
+             "nanyangwx.yeksports.com",
+             "wushiwx.yeksports.com",
+             "nanningwx.yeksports.com",
+             "shenyangwx.yeksports.com",
+             "chengduwx.yeksports.com",
+             "jiangshanwx.yeksports.com"]

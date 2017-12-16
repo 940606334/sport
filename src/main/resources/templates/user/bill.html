@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"/>
+    <title>我的账单（最近10条）</title>
+    <link rel="stylesheet" href="../css/weui-master/weui.css"/>
+</head>
+	<body>
+		<div class="container" id="container"><div class="page preview js_show">
+
+    <div class="page__bd">
+        <div class="weui-form-preview" th:each="list:${list}">
+            <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">交易时间</label>
+                    <em class="weui-form-preview__value" th:text="${list.billdate}"/>
+                </div>
+            </div>
+            <div class="weui-form-preview__bd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">交易门店 </label>
+                    <span class="weui-form-preview__value" th:text="${list.name}"/>
+                </div>
+             
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">导购员编号</label>
+                    <span class="weui-form-preview__value" th:text="${list.no}"/>
+                </div>
+                  <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">商品货号</label>
+                    <span class="weui-form-preview__value" th:text="${list.mptno}"/>
+                </div>
+        
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">交易金额 </label>
+                    <span class="weui-form-preview__value" th:text="${list.tot_amt_actual}"/>
+                </div>
+             
+                <!--<div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">新增积分</label>
+                    <span class="weui-form-preview__value" th:text="${list.tot_intergral}"/>
+                </div>
+                  <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">积分抵扣</label>
+                    <span class="weui-form-preview__value" th:text="${list.integral}"/>
+                </div>-->
+                 <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">单据编号</label>
+                    <span class="weui-form-preview__value" th:text="${list.docno}"/>
+                </div>
+            </div>
+
+
+        </div>
+    
+     </div>  
+</div>
+</div>
+	</body>
+</html>

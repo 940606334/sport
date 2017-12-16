@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"/>
+    <title>我的积分</title>
+    <link rel="stylesheet" href="../css/weui-master/weui.css"/>
+</head>
+	<body>
+		<div class="container" id="container">
+            <div class="page preview js_show">
+
+    <div class="page__bd">
+        <div class="weui-form-preview">
+            <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">当前积分余额</label>
+                    <em class="weui-form-preview__value" th:text="${list[0].leaveintegral}"/>
+                </div>
+            </div>
+            <div class="weui-form-preview__bd" th:each="list : ${list}">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">时间 </label>
+                    <span class="weui-form-preview__value"  style="color: red;" th:text="${list.changdate}"/>
+                </div>
+             
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">变动</label>
+                    <span class="weui-form-preview__value"  th:text="${list.integral}"/>
+                </div>
+                  <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">来源</label>
+                    <span class="weui-form-preview__value" th:text="${list.description}"/>
+                </div>
+            </div>
+
+        </div>
+    </div>
+     </div>  
+</div>
+    </body>
+</html>
