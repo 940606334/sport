@@ -4,7 +4,6 @@ server:
   session:
     cookie:
       max-age: 30
-
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -34,6 +33,11 @@ cardtype: 积分卡
 aboutusPagecode: 2
 classroomPagecode: 3
 privilegePagecode: 1
+
+#logconfig
+logging:
+  file: c:/sportslog/sprots.log
+
 #http:
 #  maxTotal: 100
 #  defaultMaxPerRoute: 20
@@ -42,30 +46,3 @@ privilegePagecode: 1
 #  socketTimeout: 10000
 #  staleConnectionCheckEnabled: true
 
-domainName: ["huaianwx.yeksports.com",
-             "hefeiwx.yeksports.com",
-             "shanxiwx.yeksports.com",
-             "zhuzhouwx.yeksports.com",
-             "yiwuwx.yeksports.com",
-             "shishiwx.yeksports.com",
-             "beijingwx.yeksports.com",
-             "wuhanwx.yeksports.com",
-             "zhengzhouwx.yeksports.com",
-             "nanchangwx.yeksports.com",
-             "tianjinwx.yeksports.com",
-             "shanghaiwx.yeksports.com",
-             "wenzhouwx.yeksports.com",
-             "kunmingwx.yeksports.com",
-             "guiyangwx.yeksports.com",
-             "zongbubeidan.yeksports.com",
-             "dianshangwx.yeksports.com",
-             "suzhouwx.yeksports.com",
-             "guangzhouwx.yeksports.com",
-             "xianwx.yeksports.com",
-             "xuzhouwx.yeksports.com",
-             "nanyangwx.yeksports.com",
-             "wushiwx.yeksports.com",
-             "nanningwx.yeksports.com",
-             "shenyangwx.yeksports.com",
-             "chengduwx.yeksports.com",
-             "jiangshanwx.yeksports.com"]
