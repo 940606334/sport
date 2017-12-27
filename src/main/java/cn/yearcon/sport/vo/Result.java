@@ -1,8 +1,6 @@
 package cn.yearcon.sport.vo;
 
 import cn.yearcon.sport.enums.ResultEnum;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.sun.net.httpserver.Authenticator;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,14 +12,15 @@ import java.io.Serializable;
  * @create 2017-12-04 13:45
  **/
 @Data
-
 public class Result<T> implements Serializable{
 
     private Integer code;
     private String msg;
     private T data;
 
+    public Result(){
 
+    }
     public Result(Integer code, String msg, T data) {
         this.code = code;
         this.msg = msg;

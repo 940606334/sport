@@ -4,8 +4,8 @@
   <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"/>
     <title>修改团购申请信息</title>
-    <link rel="stylesheet" href="../css/weui-master/weui.css"/>
-    <link rel="stylesheet" href="../css/sports/groupbuyedit.css"/>
+    <link rel="stylesheet" href="/css/weui-master/weui.css"/>
+    <link rel="stylesheet" href="/css/sports/groupbuyedit.css"/>
     <!--<link rel="stylesheet" href="../css/need/layer.css"/>-->
 </head>
 <body>
@@ -40,26 +40,26 @@
             </div>
         </div>
         <div class="weui-flex" style="padding-bottom:10px; padding-top:10px; background-color: #FFFFFF;  margin-top:10px;">
-            <div class="weui-flex__item" onclick="javascipt:window.location.href='/sport/user/getIntegral'">
+            <div class="weui-flex__item" onclick="javascipt:window.location.href='/user/getIntegral'">
                 <div class="placeholder">
                     <p><img src="../img/m1.png" style="width:50px;"/></p>
                     <p>积分</p>
                 </div>
             </div>
-            <div class="weui-flex__item" onclick="javascipt:window.location.href='#'">
+            <div class="weui-flex__item" onclick="javascipt:window.location.href='/getShoparea'">
                 <div class="placeholder">
                     <p><img src="../img/m2.png" style="width:50px;"/></p>
                     <p>附近门店</p>
                 </div>
             </div>
-            <div class="weui-flex__item" onclick="javascipt:window.location.href='/sport/user/getBill'">
+            <div class="weui-flex__item" onclick="javascipt:window.location.href='/user/getBill'">
                 <div class="placeholder">
                     <p><img src="../img/m3.png" style="width:50px;"/></p>
                     <p>消费账单</p>
                 </div>
             </div>
         </div>
-        <form action="/sport/user/saveGroupbuy" method="post" id="groupbuyForm">
+        <form action="/user/saveGroupbuy" method="post" id="groupbuyForm">
             <input type="hidden" th:value="${groupbuy.id}" name="id"/>
             <!--<input type="hidden" th:value="${groupbuy.vipid}" name="vipid"/>
             <input type="hidden" th:value="${groupbuy.webid}" name="webid"/>-->

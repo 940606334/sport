@@ -24,7 +24,12 @@ public class CookieUtil {
         //cookie.setMaxAge(maxAge);
         response.addCookie(cookie);
     }
-
+    public static void set(HttpServletResponse response, String name, String value,Integer maxAge) {
+        Cookie cookie = new Cookie(name, value);
+        cookie.setPath("/");
+        cookie.setMaxAge(maxAge);
+        response.addCookie(cookie);
+    }
     /**
      * 获取Cookie
      * @param request
@@ -34,7 +39,6 @@ public class CookieUtil {
     public static Cookie get(HttpServletRequest request, String name) {
         Map<String, Cookie> map = readCookieAsMap(request);
         if(map.containsKey(name)){
-
             return map.get(name);
         }
         return null;

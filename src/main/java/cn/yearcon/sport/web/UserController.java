@@ -165,6 +165,13 @@ public class UserController {
         }
         return "user/coupon";
     }
+
+    /**
+     * 会员信息
+     * @param request
+     * @param model
+     * @return
+     */
     @RequestMapping("/getInfo")
     public String getInfo(HttpServletRequest request,Model model){
         Cookie cookie=CookieUtil.get(request,"vipid");

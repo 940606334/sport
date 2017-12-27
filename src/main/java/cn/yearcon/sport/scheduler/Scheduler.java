@@ -78,7 +78,7 @@ public class Scheduler {
      * 遍历微信公众号表
      * @throws SQLException
      */
-    @Scheduled(fixedDelay=7180000)
+    //@Scheduled(fixedDelay=7180000)
     public void findAllApp(){
         Iterator<SportsSecretEntity> iterator = sportsSecretService.findAll();
         while (iterator.hasNext()){

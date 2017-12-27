@@ -22,7 +22,7 @@ function showPosition(position)
 function getStoreInfo(coordinate){
     var dialog = YDUI.dialog;
     //var coordinate=x.innerHTML;
-    var url="/sport/getStore";
+    var url="/getStore";
     //var coordinate=$.cookie("VPIAO_MOBILE_CURRENTCITY1");
 
     var param={coordinate:coordinate};

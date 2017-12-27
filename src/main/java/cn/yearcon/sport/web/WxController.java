@@ -5,7 +5,6 @@ import cn.yearcon.sport.entity.SportsSecretEntity;
 import cn.yearcon.sport.entity.SportsUsersEntity;
 import cn.yearcon.sport.enums.ResultEnum;
 import cn.yearcon.sport.exception.SportException;
-import cn.yearcon.sport.json.WxResult;
 import cn.yearcon.sport.service.SportsSecretService;
 import cn.yearcon.sport.service.SportsUserService;
 import cn.yearcon.sport.service.SportsWxService;
@@ -22,6 +21,7 @@ import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +32,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * @author itguang
@@ -88,8 +87,8 @@ public class WxController {
 
     @RequestMapping("/getOpenid")
     @ResponseBody
-    public ModelAndView getOpenid(@RequestParam("code") String code,
-                                  HttpServletResponse response, Map<String,Object> map,
+    public String getOpenid(@RequestParam("code") String code,
+                                  HttpServletResponse response, Model model,
                                   HttpServletRequest request) {
 
         //2.获得accesstoken()
@@ -117,9 +116,10 @@ public class WxController {
             String webid=appmap.get("webid");
             sportsUsersEntity=sportsUserService.checkvip(wechatUser,vipid,webid);
         }
-        map.put("sportsUsersEntity",sportsUsersEntity);
-
-        return new ModelAndView("index",map);
+        model.addAttribute("user",sportsUsersEntity);
+        //map.put("sportsUsersEntity",sportsUsersEntity);
+        return "sport/index";
+        //return new ModelAndView("index",map);
     }
     @Autowired
     private SportsSecretService sportsSecretService;
@@ -131,7 +131,8 @@ public class WxController {
     public Map<String, String> getApi(HttpServletRequest request,String url){
         Map<String,String> map=sportsWxService.getAppid(request);
         //String url="http://zongbubeidan.yeksports.com/sport/reg";//request.getRequestURL().toString();
-        System.out.println("url:"+url);
+        //System.out.println("url:"+url);
+        log.info("url={}", url);
         String appid=map.get("appid");
         SportsSecretEntity sportsSecretEntity=sportsSecretService.findOne(appid);
         Map<String, String> ret = new Sign().sign(sportsSecretEntity.getJsapiTicket(), url);

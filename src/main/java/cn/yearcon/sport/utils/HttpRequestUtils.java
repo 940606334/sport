@@ -14,8 +14,7 @@ import org.springframework.web.client.RestTemplate;
  **/
 public class HttpRequestUtils {
 
-    @Autowired
-    private HttpClientUtil httpClientUtil;
+
 
     private static Logger logger = LoggerFactory.getLogger(HttpRequestUtils.class);    //日志记录
 

@@ -2,12 +2,10 @@ package cn.yearcon.sport.web;
 
 import cn.yearcon.sport.entity.SportsUsersotherEntity;
 import cn.yearcon.sport.entity.SysOfficeEntity;
-import cn.yearcon.sport.service.SportsUserService;
 import cn.yearcon.sport.service.SportsUsersotherService;
 import cn.yearcon.sport.service.SysOfficeService;
 import cn.yearcon.sport.utils.CookieUtil;
 import cn.yearcon.sport.utils.HttpRequestUtils;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -15,10 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.rmi.CORBA.Util;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,7 +32,7 @@ public class RegController {
     //注册页面
     @RequestMapping(value="/reg",method = RequestMethod.GET)
     public String reg(){
-        return "reg";
+        return "sport/reg";
     }
     //获取商店列表
     @RequestMapping(value="getStore")
@@ -79,7 +74,7 @@ public class RegController {
         }catch (Exception e) {
             model.addAttribute("message",e.getMessage());
             //System.out.println(e.getMessage());
-            return "reg";
+            return "redirect:/reg";
         }
 
     }

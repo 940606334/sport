@@ -18,34 +18,9 @@ public class RegVip implements Serializable{
    private Integer v_store;	    //开卡店仓id
    private String v_passwd;	   //支付密码
 
-    private String app_act;
-    private String sign;
 
-    public RegVip() {
-        this.app_act = "user.reg";
-        this.sign = "y781821fa56a7698td";
-    }
 
-    public RegVip(String app_act, String sign) {
-        this.app_act = app_act;
-        this.sign = sign;
-    }
 
-    public String getApp_act() {
-        return app_act;
-    }
-
-    public void setApp_act(String app_act) {
-        this.app_act = app_act;
-    }
-
-    public String getSign() {
-        return sign;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
-    }
 
     public String getV_mobil() {
         return v_mobil;

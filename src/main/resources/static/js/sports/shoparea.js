@@ -4,7 +4,7 @@ $.getScript("http://res.wx.qq.com/open/js/jweixin-1.1.0.js", function () {
         type: "get",
         dataType: "json",
         cache: false,
-        url: "/sport/wechat/getApi?url="+encodeURIComponent(window.location.href),
+        url: "/wechat/getApi?url="+encodeURIComponent(window.location.href),
         success: function (data) {
             wx.config({
                 debug: true,
@@ -67,7 +67,7 @@ $.getScript("http://res.wx.qq.com/open/js/jweixin-1.1.0.js", function () {
 });
 
 function ajaxloadinfo(coordinate){
-    var url="/sport/getStore?coordinate="+coordinate;
+    var url="/getStore?coordinate="+coordinate;
     console.log(coordinate);
     $.get(url,function(str){
 

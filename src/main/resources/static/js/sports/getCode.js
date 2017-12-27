@@ -22,7 +22,7 @@
             return;
         }
         dialog.loading.open('发送中...');
-        var getcodeurl='/sport/getCode';
+        var getcodeurl='/getCode';
         param={"mobile":mobile};
         $.post(getcodeurl,param,function (result) {
             var data=JSON.parse(result);

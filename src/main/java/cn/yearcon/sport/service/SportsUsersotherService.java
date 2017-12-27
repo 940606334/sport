@@ -6,26 +6,15 @@ import cn.yearcon.sport.exception.ServiceException;
 import cn.yearcon.sport.json.JsonResult;
 import cn.yearcon.sport.repository.SportsUsersotherRepository;
 import cn.yearcon.sport.utils.CookieUtil;
-import cn.yearcon.sport.utils.HttpClientUtil;
 import cn.yearcon.sport.utils.HttpRequestUtils;
-import cn.yearcon.sport.utils.HttpResult;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONPath;
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import jdk.nashorn.internal.scripts.JO;
-import org.json.JSONObject;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * 会员认证业务层

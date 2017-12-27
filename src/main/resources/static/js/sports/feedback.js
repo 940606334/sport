@@ -36,7 +36,7 @@ function checkFeedback(){
 }
 //获取类型
 function getType(type){
-    var url="/sport/user/getType?type="+type;
+    var url="/user/getType?type="+type;
     $("#description").attr("name",type);
     $.get(url,function(data){
         setSelect(data);

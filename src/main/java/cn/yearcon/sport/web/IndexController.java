@@ -24,24 +24,34 @@ import java.io.IOException;
 
 @Controller
 public class IndexController {
+
     @RequestMapping(value="/index",method = RequestMethod.GET)
-    public String index(HttpServletRequest request, Model model){
+    public String index(HttpServletRequest request, Model model,HttpServletResponse response){
         Cookie cookie=CookieUtil.get(request,"vipid");
-        if (cookie==null){
+        /*if (cookie==null){
             model.addAttribute("message","请完成认证");
             return "redirect:/reg";
-        }
+        }*/
         String vipid=cookie.getValue();
         SportsUsersEntity sportsUsersEntity = sportsUserService.findByVipid(Integer.parseInt(vipid));
         if(sportsUsersEntity==null){
             return "redirect:/wechat/authorize";
         }
-        String url=interfaceUrl+"&app_act=user.detail&vipid="+vipid;
+        /*String url=interfaceUrl+"&app_act=user.detail&vipid="+vipid;
         String json= new HttpRequestUtils().getHttp(url);
         String integral = (String) JSONPath.read(json, "$.item.integral");
-        sportsUsersEntity.setIntegral(integral);
+        sportsUsersEntity.setIntegral(integral);*/
         model.addAttribute("user",sportsUsersEntity);
-        return "index";
+        cookie=CookieUtil.get(request,"url");
+        if (cookie!=null){
+            String url=cookie.getValue();
+            CookieUtil.set(response,"url",url,0);
+            if(url.endsWith("/index")){
+                return "sport/index";
+            }
+            return "redirect:"+url;
+        }
+        return "sport/index";
     }
     @Value("${interfaceUrl}")
     private String interfaceUrl;
@@ -52,14 +62,20 @@ public class IndexController {
     private SportsUserService sportsUserService;
     @RequestMapping(value="/getShoparea",method = RequestMethod.GET)
     public String getShoparea(){
-        return "shoparea";
+        return "sport/shoparea";
     }
     @Autowired
     private SportsUsersotherService sportsUsersotherService;
     @RequestMapping(value="/getOnecode",method = RequestMethod.GET)
     public String getOneCode(){
-        return "barcode";
+        return "sport/barcode";
     }
+
+    /**
+     * 生成一维码
+     * @param request
+     * @param response
+     */
     @RequestMapping(value = "generateCode")
     public void getCode(HttpServletRequest request,HttpServletResponse response){
         Cookie cookie=CookieUtil.get(request,"vipid");
