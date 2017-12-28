@@ -1,0 +1,33 @@
+body{font-size: .8rem;}
+span.icon-uniE918{ color: #60abff; }
+.btn{
+    padding: .4rem;
+    border-radius: 5px;
+    border: initial;
+    background-color: #ff4e00;
+    color: #fff;
+    margin-right: 0px;
+    font-size: .75rem;
+}
+.cy-btn{
+    width: 100%;
+    line-height: 1.8rem;
+    background-color: #00cc00;
+}
+.btn-max{
+    display: inherit;
+    margin: .5rem;
+    text-align: center;
+    line-height: 1.8rem;
+    font-size: .8rem;
+}
+.btn-green{ background-color: #00cc00; }
+.btn-red{ background-color: #E84219 !important; }
+.btn-b{ background-color: #60abff; }
+.btn-forbidden{background-color: #ccc; }
+.btn-upgrade{ background-color: #FC605A; }
+.btn-set{background-color: #F90;}
+
+#uploadForm{
+    text-align: center;
+}
