@@ -26,11 +26,13 @@ public class MyInterceptor1 implements HandlerInterceptor {
             return true;
         } else if(path.toString().endsWith("/getVipidByMobile")){
             return true;
+        }else if(path.toString().endsWith("/getStore")){
+            return true;
         }
         if(cookie==null){
             CookieUtil.set(response,"url",path.toString());
             //System.out.println("path="+path);
-            response.sendRedirect("/login");
+            response.sendRedirect("/wechat/authorize");
             return false;
         }
         return true;// 只有返回true才会继续向下执行，返回false取消当前请求

@@ -2,14 +2,16 @@ $.getScript("http://res.wx.qq.com/open/js/jweixin-1.1.0.js", function () {
     /*if($.cookie("VPIAO_MOBILE_CURRENTCITY1")){
         return;
     }*/
+    var dialog = YDUI.dialog;
+    dialog.loading.open('获取门店数据中...');
     $.ajax({
         type: "get",
         dataType: "json",
         cache: false,
-        url: "/sport/wechat/getApi?url="+encodeURIComponent(window.location.href),
+        url: "/wechat/getApi?url="+encodeURIComponent(window.location.href),
         success: function (data) {
             wx.config({
-                debug: true,
+                debug: false,
                 appId: data.appid,
                 timestamp: data.timestamp,
                 nonceStr: data.nonceStr,

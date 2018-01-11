@@ -9,13 +9,12 @@
 	<body>
 		<div class="container" id="container">
             <div class="page preview js_show">
-
     <div class="page__bd">
         <div class="weui-form-preview">
             <div class="weui-form-preview__hd">
                 <div class="weui-form-preview__item">
                     <label class="weui-form-preview__label">当前积分余额</label>
-                    <em class="weui-form-preview__value" th:text="${list[0].leaveintegral}"/>
+                    <em class="weui-form-preview__value" th:text="${leaveintegral}"/>
                 </div>
             </div>
             <div class="weui-form-preview__bd" th:each="list : ${list}">

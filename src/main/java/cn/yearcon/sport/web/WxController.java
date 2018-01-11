@@ -3,14 +3,13 @@ package cn.yearcon.sport.web;
 import cn.yearcon.sport.dto.WechatUser;
 import cn.yearcon.sport.entity.SportsSecretEntity;
 import cn.yearcon.sport.entity.SportsUsersEntity;
+import cn.yearcon.sport.entity.SportsUsersotherEntity;
 import cn.yearcon.sport.enums.ResultEnum;
 import cn.yearcon.sport.exception.SportException;
-import cn.yearcon.sport.service.SportsSecretService;
-import cn.yearcon.sport.service.SportsUserService;
-import cn.yearcon.sport.service.SportsWxService;
-import cn.yearcon.sport.service.SysOfficeService;
+import cn.yearcon.sport.service.*;
 import cn.yearcon.sport.utils.CookieUtil;
 import cn.yearcon.sport.utils.Sign;
+import com.alibaba.fastjson.JSONPath;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -26,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -70,7 +69,7 @@ public class WxController {
         String appsecret = map.get("secret");
         String serverName=map.get("servername");
         //3.构造微信网页授权 url
-        String redirectUrl = "http://" + serverName + "/sport/wechat/getOpenid";
+        String redirectUrl = "http://" + serverName + "/wechat/getOpenid";
         wxMpInMemoryConfigStorage.setAppId(appid);
         wxMpInMemoryConfigStorage.setSecret(appsecret);
         wxMpService.setWxMpConfigStorage(wxMpInMemoryConfigStorage);
@@ -84,12 +83,15 @@ public class WxController {
     }
     @Autowired
     private SportsUserService sportsUserService;
+    @Autowired
+    SportsUsersotherService sportsUsersotherService;
+    @Autowired
+    SportApiService sportApiService;
 
     @RequestMapping("/getOpenid")
-    @ResponseBody
     public String getOpenid(@RequestParam("code") String code,
-                                  HttpServletResponse response, Model model,
-                                  HttpServletRequest request) {
+                            HttpServletResponse response, Model model,
+                            HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
         //2.获得accesstoken()
         WxMpUser wxMpUser = null;
@@ -108,18 +110,52 @@ public class WxController {
 
         log.info("wxMpUser={}", wxMpUser.toString());
         Cookie cookie=CookieUtil.get(request,"vipid");
-        String vipid=cookie.getValue();
-
-        SportsUsersEntity sportsUsersEntity = sportsUserService.findByVipid(Integer.parseInt(vipid));
-        if(sportsUsersEntity==null){
-            Map<String,String> appmap=sportsWxService.getAppid(request);
-            String webid=appmap.get("webid");
-            sportsUsersEntity=sportsUserService.checkvip(wechatUser,vipid,webid);
+        String vipid=null;
+        if(cookie==null){
+            String openid=wechatUser.getOpenId();
+            log.info("验证opneid");
+            SportsUsersEntity sportsUsersEntity=sportsUserService.findByOpenid(openid);
+            if(sportsUsersEntity==null){
+                //redirectAttributes.addAttribute("message","请注册");
+                return "redirect:/login";
+            }
+            vipid=sportsUsersEntity.getVipid()+"";
+            log.info("重新设置cookie");
+            CookieUtil.set(response,"vipid",vipid);
+        }else{
+            vipid=cookie.getValue();
         }
-        model.addAttribute("user",sportsUsersEntity);
-        //map.put("sportsUsersEntity",sportsUsersEntity);
-        return "sport/index";
-        //return new ModelAndView("index",map);
+        log.info("vipid="+vipid);
+        //验证用户信息
+        SportsUsersotherEntity sportsUsersotherEntity = sportsUsersotherService.get(Integer.parseInt(vipid));
+        if(sportsUsersotherEntity==null){
+            sportsUsersotherService.saveByVipid(Integer.parseInt(vipid));
+        }
+        //更新用户信息
+        try {
+            sportsUserService.checkvip(wechatUser,vipid);
+        }catch (Exception e){
+            redirectAttributes.addAttribute("message",e.getMessage());
+            return "redirect:/login";
+        }
+        //验证机构id
+        Map<String,String> appmap=sportsWxService.getAppid(request);
+        String webid=appmap.get("webid");
+        String json=sportApiService.getVipInfoByid(vipid);
+        String areaCode=(String) JSONPath.read(json,"$.item.c_customer_id");
+        if(areaCode==null){
+            redirectAttributes.addAttribute("message","所属区域为空");
+            return "redirect:/login";
+        }
+        if (webid.equals(areaCode)){
+            return "redirect:/index";
+        }else{
+            String name=appmap.get("name");
+            String name1=sysOfficeService.findNameByCode(areaCode);
+            redirectAttributes.addAttribute("message","您的会员卡不在“"+name+"”服务区，请关注 “"+name1+"”");
+            return "redirect:/login";
+        }
+
     }
     @Autowired
     private SportsSecretService sportsSecretService;
@@ -130,8 +166,6 @@ public class WxController {
     @ResponseBody
     public Map<String, String> getApi(HttpServletRequest request,String url){
         Map<String,String> map=sportsWxService.getAppid(request);
-        //String url="http://zongbubeidan.yeksports.com/sport/reg";//request.getRequestURL().toString();
-        //System.out.println("url:"+url);
         log.info("url={}", url);
         String appid=map.get("appid");
         SportsSecretEntity sportsSecretEntity=sportsSecretService.findOne(appid);

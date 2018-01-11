@@ -5,62 +5,65 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"/>
     <title>团购申请</title>
     <link rel="stylesheet" href="../css/weui-master/weui.css"/>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
-	<body>
-		<div class="container" id="container">
-			<div class="page preview js_show">
+<body>
+<div class="container" id="container">
+    <div class="page preview js_show">
 
-    <div class="page__bd">
-        <div class="weui-form-preview" th:each="list:${list}">
-            <div class="weui-form-preview__hd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">申请日期</label>
-                    <em class="weui-form-preview__value" th:text="${list.addtime}"/>
+        <div class="page__bd">
+            <div class="weui-form-preview" th:each="list:${list}">
+                <div class="weui-form-preview__hd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">申请日期</label>
+                        <em class="weui-form-preview__value" th:text="${#dates.format(list.addtime,'yyyy-MM-dd')}"/>
+                    </div>
                 </div>
-            </div>
-            <div class="weui-form-preview__bd">
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">处理状态 </label>
-                    <span class="weui-form-preview__value" >未处理</span>
+                <div class="weui-form-preview__bd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">处理状态 </label>
+                        <span class="weui-form-preview__value">未处理</span>
+                    </div>
+
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">联系电话</label>
+                        <span class="weui-form-preview__value" th:text="${list.mobile}"/>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">寄送地址</label>
+                        <span class="weui-form-preview__value" th:text="${list.address}"/>
+                    </div>
+
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">真实姓名 </label>
+                        <span class="weui-form-preview__value" th:text="${list.truename}"/>
+                    </div>
+
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">备注说明</label>
+                        <span class="weui-form-preview__value" th:text="${list.note}"/>
+                    </div>
+                    <div class="weui-form-preview__ft">
+                        <a class="weui-form-preview__btn weui-form-preview__btn_primary"
+                           th:href="|/user/editGroupbuy?id=${list.id}|">修改团购申请信息</a>
+                    </div>
                 </div>
-             
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">联系电话</label>
-                    <span class="weui-form-preview__value" th:text="${list.mobile}"/>
-                </div>
-                  <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">寄送地址</label>
-                    <span class="weui-form-preview__value" th:text="${list.address}"/>
-                </div>
-        
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">真实姓名 </label>
-                    <span class="weui-form-preview__value" th:text="${list.truename}"/>
-                </div>
-             
-                <div class="weui-form-preview__item">
-                    <label class="weui-form-preview__label">备注说明</label>
-                    <span class="weui-form-preview__value" th:text="${list.note}"/>
-                </div>
-                          <div class="weui-form-preview__ft">
-                           <a class="weui-form-preview__btn weui-form-preview__btn_primary" th:href="|/user/editGroupbuy?id=${list.id}|">修改团购申请信息</a>
-                       </div>
-            </div>
-        
+
             </div>
         </div>
-    
-     </div>  
+
+    </div>
 
     <div class="page__ft j_bottom">
- <div class="page button js_show">
+        <div class="page button js_show">
 
-    <div class="page__bd page__bd_spacing">
-        <a href="/user/addGroupbuy" class="weui-btn weui-btn_primary">填写新的团购申请</a>
-   
-        
+            <div class="page__bd page__bd_spacing">
+                <a href="/user/addGroupbuy" class="weui-btn weui-btn_primary">填写新的团购申请</a>
 
-    </div></div>
-    </div></div>
-	</body>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
 </html>

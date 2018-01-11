@@ -30,9 +30,9 @@
 				</div>
 				 	
 				     <div class="my-Limit"  style="text-align: center;">
-                         <span class="addUp" onclick="window.location.href='/user/getIntegral'">积分<br/>&nbsp;
-                             <!--<font th:text="${user.integral}"/>--></span>
-                    <span class="addUp" onclick="window.location.href='/user/getCoupon'">优惠券<br/>&nbsp;</span>
+                         <span class="addUp" onclick="window.location.href='/user/getIntegral'">积分<br/>
+                             <font th:text="${user.integral!=NullPointerException}?${user.integral}:'0'"/></span>
+                    <span class="addUp" onclick="window.location.href='/user/getCoupon'">优惠券<br/>0</span>
                 </div>  
 		
 		</div>

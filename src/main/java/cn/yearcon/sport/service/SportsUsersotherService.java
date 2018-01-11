@@ -43,9 +43,9 @@ public class SportsUsersotherService {
         JsonResult jsonResult=new Gson().fromJson(json, JsonResult.class);
 
         if(jsonResult.getStatus()==0) {//状态为0注册失败
-            throw new ServiceException(jsonResult.getInfo());
+            throw new ServiceException(jsonResult.getMsg());
         }else if(jsonResult.getStatus()==1){//1注册成功
-            String vipid=jsonResult.getInfo();
+            String vipid=jsonResult.getMsg();
             CookieUtil.set(response,"vipid",vipid);
             entity.setVipid(Integer.parseInt(vipid));
             entity.setAddtime(new Date());
@@ -56,15 +56,15 @@ public class SportsUsersotherService {
 
 
     }
-
+    @Autowired
+    private SportApiService sportApiService;
     /**
      * 获取店名
      * @param vipid
      * @return
      */
     public String getStorename(String vipid){
-        String url=interfaceUrl+"&app_act=user.detail&vipid="+vipid;
-        String json= new HttpRequestUtils().getHttp(url);
+        String json= sportApiService.getVipInfoByid(vipid);
         return (String) JSONPath.read(json, "$.item.storename");
     }
 
@@ -82,28 +82,60 @@ public class SportsUsersotherService {
     private String interfaceUrl;
     @Value("${cardtype}")
     private String cardtype;
+
+    /**
+     * 注册会员
+     * @param entity
+     * @return
+     */
     public String postInterface(SportsUsersotherEntity entity){
         RegVip regVip=new RegVip();
-        regVip.setV_birthday(entity.getVipbirthday());
-        regVip.setV_code(entity.getCheckcode());
-        regVip.setV_mobil(entity.getMobile());
-        regVip.setV_name(entity.getTruename());
-        regVip.setV_passwd(entity.getVippassword());
-        regVip.setV_store(entity.getStoreid());
+        regVip.setBirthday(entity.getVipbirthday());
+        regVip.setCheckcode(entity.getCheckcode());
+        regVip.setMobile(entity.getMobile());
+        regVip.setName(entity.getTruename());
+        regVip.setPassword(entity.getVippassword());
+        regVip.setStoreid(entity.getStoreid());
         String sex=entity.getVipsex();
         if("1".equals(sex)){
-            regVip.setV_sex("M");
+            regVip.setSex("M");
         }else{
-            regVip.setV_sex("W");
+            regVip.setSex("W");
         }
         System.out.println(regVip.toString());
-        String url=interfaceUrl+"&app_act=user.reg"+ regVip.toString();
-
-        return new HttpRequestUtils().postHttp(url);
+        //String url=interfaceUrl+"&app_act=user.reg"+ regVip.toString();
+        String json=sportApiService.regVip(regVip.toString());
+        return json;
     }
 
 
     public SportsUsersotherEntity findByMObile(String mobile){
         return sportsUsersotherRepository.findByMobile(mobile);
+    }
+    /**
+     * 根据vipid 保存用户信息
+     */
+    public void saveByVipid(Integer vipid){
+        String json=sportApiService.getVipInfoByid(vipid.toString());
+        Integer status=(Integer) JSONPath.read(json,"$.status");
+        if(status==1){
+            SportsUsersotherEntity entity=new SportsUsersotherEntity();
+            entity.setVipid(vipid);
+            entity.setStorename((String) JSONPath.read(json,"$.item.storename"));
+            entity.setCarttype((String) JSONPath.read(json,"$.item.viptype"));
+            entity.setAddtime(new Date());
+            entity.setMobile((String) JSONPath.read(json,"$.item.mobil"));
+            entity.setOpencarddate((String) JSONPath.read(json,"$.item.opencarddate"));
+            entity.setStoreid(Integer.parseInt((String)JSONPath.read(json,"$.item.c_store_id")));
+            entity.setTruename((String) JSONPath.read(json,"$.item.vipname"));
+            String sex=(String)JSONPath.read(json,"$.item.sex");
+            entity.setVipbirthday((String) JSONPath.read(json,"$.item.birthday"));
+            if("M".equals(sex)){
+                entity.setVipsex("1");
+            }else{
+                entity.setVipsex("0");
+            }
+            sportsUsersotherRepository.save(entity);
+        }
     }
 }

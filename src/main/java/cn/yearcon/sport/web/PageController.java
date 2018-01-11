@@ -51,7 +51,10 @@ public class PageController {
         Map<String,String> map=sportsWxService.getAppid(request);
         String webid=map.get("webid");
         SportsWebpageEntity sportsWebpageEntity=sportsWebpageService.findByWebidAndPagecode(Integer.parseInt(webid),pagecode);
-        String pageurl=sportsWebpageEntity.getPageurl();
+        String pageurl="/index";
+        if(sportsWebpageEntity!=null){
+            pageurl=sportsWebpageEntity.getPageurl();
+        }
         return pageurl;
     }
 }

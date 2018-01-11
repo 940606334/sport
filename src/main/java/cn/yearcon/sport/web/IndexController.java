@@ -2,6 +2,7 @@ package cn.yearcon.sport.web;
 
 import cn.yearcon.sport.entity.SportsUsersEntity;
 import cn.yearcon.sport.entity.SportsUsersotherEntity;
+import cn.yearcon.sport.service.SportApiService;
 import cn.yearcon.sport.service.SportsUserService;
 import cn.yearcon.sport.service.SportsUsersotherService;
 import cn.yearcon.sport.service.SysOfficeService;
@@ -9,6 +10,7 @@ import cn.yearcon.sport.utils.BarcodeUtil;
 import cn.yearcon.sport.utils.CookieUtil;
 import cn.yearcon.sport.utils.HttpRequestUtils;
 import com.alibaba.fastjson.JSONPath;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,23 +26,20 @@ import java.io.IOException;
 
 @Controller
 public class IndexController {
+    @Autowired
+    SportApiService sportApiService;
 
     @RequestMapping(value="/index",method = RequestMethod.GET)
     public String index(HttpServletRequest request, Model model,HttpServletResponse response){
         Cookie cookie=CookieUtil.get(request,"vipid");
-        /*if (cookie==null){
-            model.addAttribute("message","请完成认证");
-            return "redirect:/reg";
-        }*/
         String vipid=cookie.getValue();
         SportsUsersEntity sportsUsersEntity = sportsUserService.findByVipid(Integer.parseInt(vipid));
         if(sportsUsersEntity==null){
             return "redirect:/wechat/authorize";
         }
-        /*String url=interfaceUrl+"&app_act=user.detail&vipid="+vipid;
-        String json= new HttpRequestUtils().getHttp(url);
+        String json=sportApiService.getVipInfoByid(vipid);
         String integral = (String) JSONPath.read(json, "$.item.integral");
-        sportsUsersEntity.setIntegral(integral);*/
+        sportsUsersEntity.setIntegral(integral);
         model.addAttribute("user",sportsUsersEntity);
         cookie=CookieUtil.get(request,"url");
         if (cookie!=null){

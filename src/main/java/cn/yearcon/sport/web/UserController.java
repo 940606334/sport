@@ -2,6 +2,7 @@ package cn.yearcon.sport.web;
 
 import ch.qos.logback.core.rolling.helper.PeriodicityType;
 import cn.yearcon.sport.entity.*;
+import cn.yearcon.sport.json.JsonResult;
 import cn.yearcon.sport.service.*;
 import cn.yearcon.sport.utils.CookieUtil;
 import cn.yearcon.sport.utils.HttpRequestUtils;
@@ -10,9 +11,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONPath;
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import jdk.net.SocketFlow;
 import lombok.experimental.PackagePrivate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.print.DocFlavor;
 import javax.servlet.http.Cookie;
@@ -40,9 +45,13 @@ import java.util.Map;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    private final Logger logger= LoggerFactory.getLogger(this.getClass());
 
     @Value("${interfaceUrl}")
     private String interfaceUrl;
+
+    @Autowired
+    private SportApiService sportApiService;
     /**
      * 获取积分列表
      */
@@ -50,15 +59,17 @@ public class UserController {
     public String getIntegral(HttpServletRequest request, Model model){
         Cookie cookie=CookieUtil.get(request,"vipid");
         String vipid=cookie.getValue();
-        String url=interfaceUrl+"&app_act=integral.list&vipid="+vipid;
-        String json= new HttpRequestUtils().getHttp(url);
+        String json= sportApiService.getIntegralList(vipid);
         Integer status=(Integer) JSONPath.read(json, "$.status");
         if(status==1){
             JSONArray list = (JSONArray) JSONPath.read(json, "$.lists");
             model.addAttribute("list",list);
         }else{
-            model.addAttribute("message","找不到记录");
+            logger.debug("没有找到积分列表");
         }
+        json=sportApiService.getIntegral(vipid);
+        String leaveintegral=(String)JSONPath.read(json,"$.msg");
+        model.addAttribute("leaveintegral",leaveintegral);
         return "user/integral";
     }
     /**
@@ -68,17 +79,17 @@ public class UserController {
     public String getBill(HttpServletRequest request, Model model){
         Cookie cookie=CookieUtil.get(request,"vipid");
         String vipid=cookie.getValue();
-        String url=interfaceUrl+"&app_act=retail.list&vipid="+vipid;
-        String json= new HttpRequestUtils().getHttp(url);
+        //String url=interfaceUrl+"&app_act=retail.list&vipid="+vipid;
+        String json= sportApiService.getBillList(vipid);
         Integer status=(Integer)JSONPath.read(json,"$.status");
         if(status==1){
             JSONArray list=(JSONArray) JSONPath.read(json,"$.lists");
             if(list.size()==0){
-                model.addAttribute("message","账单信息为空");
+                logger.debug("账单记录为空");
             }
             model.addAttribute("list",list);
         }else{
-            model.addAttribute("message","找不到记录");
+            logger.debug("无相关账单");
         }
         return "user/bill";
     }
@@ -108,7 +119,11 @@ public class UserController {
         model.addAttribute("user",sportsUsersEntity);
         Integer webid=sportsUsersEntity.getWebid();
         SportsWebpageEntity sportsWebpageEntity=sportsWebpageService.findByWebidAndPagecode(webid,groupbuyPagecode);
-        model.addAttribute("pageContent",sportsWebpageEntity.getPagecontent());
+        String pagecontent="";
+        if(sportsWebpageEntity!=null){
+            pagecontent=sportsWebpageEntity.getPagecontent();
+        }
+        model.addAttribute("pageContent",pagecontent);
        return "user/groupbuyedit";
     }
     @Value("${groupbuyPagecode}")
@@ -121,7 +136,11 @@ public class UserController {
         model.addAttribute("user",sportsUsersEntity);
         Integer webid=sportsUsersEntity.getWebid();
         SportsWebpageEntity sportsWebpageEntity=sportsWebpageService.findByWebidAndPagecode(webid,groupbuyPagecode);
-        model.addAttribute("pageContent",sportsWebpageEntity.getPagecontent());
+        String pagecontent="";
+        if(sportsWebpageEntity!=null){
+           pagecontent=sportsWebpageEntity.getPagecontent();
+        }
+        model.addAttribute("pageContent",pagecontent);
         return "user/groupbuyadd";
     }
     @RequestMapping(value = "/saveGroupbuy",method = RequestMethod.POST)
@@ -151,8 +170,8 @@ public class UserController {
     public String getCoupon(HttpServletRequest request, Model model){
         Cookie cookie=CookieUtil.get(request,"vipid");
         String vipid=cookie.getValue();
-        String url=interfaceUrl+"&app_act=voucher.list&vipid="+vipid;
-        String json= new HttpRequestUtils().getHttp(url);
+        //String url=interfaceUrl+"&app_act=voucher.list&vipid="+vipid;
+        String json= sportApiService.getCouponList(vipid);
         Integer status=(Integer)JSONPath.read(json,"$.status");
         if(status==1){
             JSONArray list=(JSONArray) JSONPath.read(json,"$.lists");
@@ -176,24 +195,30 @@ public class UserController {
     public String getInfo(HttpServletRequest request,Model model){
         Cookie cookie=CookieUtil.get(request,"vipid");
         String vipid=cookie.getValue();
-        String url=interfaceUrl+"&app_act=user.detail&vipid="+vipid;
-        String json= new HttpRequestUtils().getHttp(url);
+        //String url=interfaceUrl+"&app_act=user.detail&vipid="+vipid;
+        String json= sportApiService.getVipInfoByid(vipid);
         Map<String,String> infomap = (Map<String,String>) JSONPath.read(json, "$.item");
         model.addAttribute("map",infomap);
         return "user/info";
     }
     @RequestMapping(value = "/saveInfo",method = RequestMethod.POST)
-    public String saveInfo(VipInfo vipInfo,HttpServletRequest request,Model model){
+    public String saveInfo(VipInfo vipInfo, RedirectAttributes redirectAttributes){
         //System.out.println(vipInfo);
-        String url=interfaceUrl+"&app_act=user.edit"+vipInfo.toString();
-        String json=new HttpRequestUtils().postHttp(url);
-        Integer status=(Integer) JSONPath.read(json,"$.status");
-        if(status==0){
-            String info=(String)JSONPath.read(json,"$.info");
+        //String url=interfaceUrl+"&app_act=user.edit"+vipInfo.toString();
+        String json=sportApiService.updateVip(vipInfo.toString());
+        Gson gson=new Gson();
+        JsonResult jsonResult=gson.fromJson(json, JsonResult.class);
+        /*if(jsonResult.getStatus()==1){
+
+        }*/
+        redirectAttributes.addAttribute("message",jsonResult.getMsg());
+        /*Integer status=(Integer) JSONPath.read(json,"$.status");
+        if(status!=1){
+            String info=(String)JSONPath.read(json,"$.msg");
             model.addAttribute("message",info);
-            return "user/getInfo";
-        }
-        return "redirect:/index";
+            return "user/info";
+        }*/
+        return "redirect:/user/getInfo";
     }
     @RequestMapping(value = "/feedback")
     public String feedback(){

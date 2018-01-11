@@ -1,5 +1,5 @@
 server:
-  port: 8002
+  port: 80
   context-path:
   session:
     cookie:
@@ -7,9 +7,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    username: YEKDBTEST
-    password: test123456
-    url: jdbc:mysql://192.168.80.174:3306/jeeplus_schema?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: abc123
+    url: jdbc:mysql://10.3.1.80:3306/sports?useUnicode=true&characterEncoding=utf-8
   jpa:
     show-sql: true
   mvc:
@@ -27,7 +27,7 @@ spring:
       min-idle: 0
     timeout: 0
 
-interfaceUrl: http://10.3.1.52:8001/yek_api/send.ashx?sign=y781821fa56a7698td
+interfaceUrl: http://10.3.1.83:8001/
 groupbuyPagecode: 4
 cardtype: 积分卡
 aboutusPagecode: 2
@@ -36,7 +36,7 @@ privilegePagecode: 1
 
 #logconfig
 logging:
-  file: c:/sportslog/sprots.log
+  file: /usr/java/sprots.log
 
 #http:
 #  maxTotal: 100

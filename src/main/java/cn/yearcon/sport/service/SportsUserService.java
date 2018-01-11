@@ -4,7 +4,9 @@ import cn.yearcon.sport.dto.WechatUser;
 import cn.yearcon.sport.entity.SportsUsersEntity;
 import cn.yearcon.sport.entity.SportsUsersotherEntity;
 import cn.yearcon.sport.exception.ServiceException;
+import cn.yearcon.sport.json.JsonResult;
 import cn.yearcon.sport.repository.SportsUsersRepository;
+import com.alibaba.fastjson.JSONPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +23,10 @@ public class SportsUserService {
 
     @Autowired
     private SportsUsersRepository sportsUsersRepository;
+    @Autowired
+    private SportApiService sportApiService;
 
-    public SportsUsersEntity checkvip(WechatUser wechatUser,String vipid,String webid) {
+    public void checkvip(WechatUser wechatUser,String vipid) {
         if (wechatUser==null){
             throw new ServiceException("对象不能为空");
         }
@@ -46,13 +50,23 @@ public class SportsUserService {
 
         sportsUsersEntity.setPrivilege(wechatUser.getPrivilege());
         sportsUsersEntity.setAddtime(new Date());
-        sportsUsersEntity.setWebid(Integer.parseInt(webid));
+        String json=sportApiService.getVipInfoByid(vipid);
+        String areaCode=(String) JSONPath.read(json, "$.item.c_customer_id");
+        sportsUsersEntity.setWebid(Integer.parseInt(areaCode));
         sportsUsersRepository.save(sportsUsersEntity);
-        return sportsUsersEntity;
 
     }
     /**根据vipid查询会员信息*/
     public SportsUsersEntity findByVipid(Integer vipid){
         return sportsUsersRepository.findOne(vipid);
+    }
+
+    /**根据openid查询会员信息*/
+    public SportsUsersEntity findByOpenid(String openid){
+        return sportsUsersRepository.findByOpenid(openid);
+    }
+
+    public void deleteById(Integer vipid){
+        sportsUsersRepository.delete(vipid);
     }
 }

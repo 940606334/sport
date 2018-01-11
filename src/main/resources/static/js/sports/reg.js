@@ -3,6 +3,7 @@ $(document).ready(function(){
     //getLocation();
     //getStoreInfo();
     $("#J_OpenKeyBoard").click(regvip);
+
 })
 /*var x=document.getElementById("demo");
 function getLocation()
@@ -24,11 +25,14 @@ function getStoreInfo(coordinate){
     //var coordinate=x.innerHTML;
     var url="/getStore";
     //var coordinate=$.cookie("VPIAO_MOBILE_CURRENTCITY1");
-
     var param={coordinate:coordinate};
-    dialog.loading.open('获取门店数据中...');
+
     $.post(url,param,function(result){
         dialog.loading.close();
+        var msg=$("#msg").text();
+        if(msg){
+            dialog.toast(msg, 1500);
+        }
         var data=JSON.parse(result);
         if(data.status=1){
             setStoreList(data.lists);
@@ -39,10 +43,11 @@ function getStoreInfo(coordinate){
 function setStoreList(list){
     var storeid=$("#storeid");
     storeid.empty();
-    var option=$('<option value="" label="请选择"></option>');
+    var option=$('<option value="" >请选择</option>');
+
     storeid.append(option);
     for(var i in list){
-       option=$('<option value="'+list[i].id+'" label="'+list[i].name+'"></option>');
+       option=$('<option value="'+list[i].id+'">'+list[i].name+'('+list[i].distance+'km)'+'</option>');
        storeid.append(option);
     }
 }
@@ -96,8 +101,9 @@ function checkvipinfo(){
         return false;
     }
     var vippassword=$("#vippassword").val();
-    if(!vippassword){
-        dialog.toast("请输入密码",1500);
+    var reg=/^\d{6}$/;
+    if(!reg.test(vippassword)){
+        dialog.toast("密码必须六位纯数字",1500);
         return false;
     }
     var param={mobile:mobile,

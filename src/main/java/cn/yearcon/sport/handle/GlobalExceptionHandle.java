@@ -22,10 +22,10 @@ public class GlobalExceptionHandle {
         log.error("[自定义全局异常:SportException=]:"+e.getCode()+":"+e.getMessage());
         return new Result(e.getCode(), e.getMessage());
     }
-    @ExceptionHandler(value = Exception.class)
-    public String handleException(SportException e) {
-        log.error("[自定义全局异常:Exception=]:"+e.getCode()+":"+e.getMessage());
-        return "error/error";
-    }
+//    @ExceptionHandler(value = Exception.class)
+//    public String handleException(SportException e) {
+//        log.error("[自定义全局异常:Exception=]:"+e.getCode()+":"+e.getMessage());
+//        return "error/error";
+//    }
 
 }

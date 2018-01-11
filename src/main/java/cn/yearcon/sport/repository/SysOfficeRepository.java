@@ -10,4 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface SysOfficeRepository extends JpaRepository<SysOfficeEntity,String> {
 
     SysOfficeEntity findOneByAddress(String address);
+
+
+    SysOfficeEntity findOneByCode(String code);
 }

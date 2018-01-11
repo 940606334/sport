@@ -2,6 +2,7 @@ package cn.yearcon.sport.config;
 
 import cn.yearcon.sport.interceptor.MyInterceptor1;
 import cn.yearcon.sport.interceptor.UploadInterceptor;
+import org.junit.experimental.categories.ExcludeCategories;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -26,11 +27,15 @@ public class MyWebAppConfigurer  extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new MyInterceptor1())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/reg")
+                .excludePathPatterns("/regvip")
                 .excludePathPatterns("/login")
                 .excludePathPatterns("/toUpload")
                 .excludePathPatterns("/upload")
                 .excludePathPatterns("/getCode")
-                .excludePathPatterns("/getVipidByMobile");
+                .excludePathPatterns("/getVipidByMobile")
+                .excludePathPatterns("/getStore")
+                .excludePathPatterns("/checkmobile")
+                .excludePathPatterns("/wechat/**");
         registry.addInterceptor(new UploadInterceptor()).addPathPatterns("/toUpload");
         super.addInterceptors(registry);
     }

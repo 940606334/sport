@@ -12,23 +12,24 @@
 	<body>
     <div id="msg"><span th:text="${message}"></span></div>
 		   <!--可用-->
-    <!--<div class="coupon">
+    <div class="coupon" th:each="coupon:${list}">
         <div class="coupon-left">
             <div class="coupon-inner">
                 <div class="coupon-money">
                     <span>¥</span>
-                    <span class="sum">100.00</span>
+                    <span class="sum" th:text="${coupon.amtdes}"></span><!--折扣内容-->
                 </div>
                 <div class="coupon-condition">
-                    <p>满200.00可用</p>
+                    <p th:text="${coupon.amt_noles}"></p>
                 </div>
             </div>
         </div>
         <div class="coupon-right">
             <div class="coupon-inner">
                 <div class="coupon-time">
-                    截止日期<br/>
-                    2216-12-31
+                    优惠券类型<br/>
+                    <span th:if="${coupon.amt_type==1}">折扣</span>
+					<span th:if="${coupon.amt_type==2}">现金</span>
                 </div>
                 <i class="coupon-circle top"></i>
                 <i class="coupon-circle bottom"></i>
@@ -36,7 +37,7 @@
         </div>
         <div class="coupon-light"></div>
     
-    </div>-->
+    </div>
 
     <!--不可用-->
     <!--<div class="coupon coupon-diabled">

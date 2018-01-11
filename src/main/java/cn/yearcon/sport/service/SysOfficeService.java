@@ -1,5 +1,6 @@
 package cn.yearcon.sport.service;
 
+import cn.yearcon.sport.entity.SportsUsersEntity;
 import cn.yearcon.sport.entity.SysOfficeEntity;
 import cn.yearcon.sport.enums.ResultEnum;
 import cn.yearcon.sport.exception.SportException;
@@ -26,6 +27,14 @@ public class SysOfficeService {
         return officeEntity;
     }
 
+    public String findNameByCode(String code){
+        SysOfficeEntity sysOfficeEntity=sysOfficeRepository.findOneByCode(code);
+        if(sysOfficeEntity==null){
+            return "";
+        }else{
+            return sysOfficeEntity.getName();
+        }
+    }
 
 
 }

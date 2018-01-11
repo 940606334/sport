@@ -50,7 +50,7 @@ public class SportsWxService {
         SysOfficeEntity officeEntity = sysOfficeService.findOneByAddress(serverName);
         String webid=officeEntity.getCode();
         SportsWxEntity wxEntity = sportsWxService.findByWebid(Integer.parseInt(webid));
-
+        String name=officeEntity.getName();
         //2.通过域名查找 appid 和 appsecret
         String appid = wxEntity.getAppid();
         String appsecret = wxEntity.getSecret();
@@ -58,6 +58,7 @@ public class SportsWxService {
         map.put("secret",appsecret);
         map.put("servername",serverName);
         map.put("webid",webid);
+        map.put("name",name);
         return map;
     }
 

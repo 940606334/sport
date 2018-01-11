@@ -2,6 +2,11 @@ $(document).ready(function(){
 	$("#J_OpenKeyBoard").click(vipcheck);
 	//$("#J_OpenKeyBoard").attr("href",url);
 	//console.log(url);
+     /*var msg=$("#msg").text();
+     if(msg){
+         var dialog = YDUI.dialog;
+         dialog.toast(msg, 1500);
+     }*/
 })
 function vipcheck(){
 	//验证表单信息
@@ -27,15 +32,3 @@ function checkMobileForm(){
     var param={mobile:mobile,checkcode:checkcode};
     return param;
 }
-//var host=document.domain;
-//console.log(host);
-//var url="http://"+host+"/sport/wechat/authorize";
-// var url="/sport/wechat/authorize";
-// window.location.href=url;
-/*$.get(url,function(result){
-    if(result.code=1){
-        window.location.href=result.data
-    }else{
-        console.log("认证失败");
-    }
-})*/

@@ -25,7 +25,7 @@
 
          <aside class="demo-tip">
              <p>1）生日填报后不可修改，如需修改请返回聊天窗口联系客服；<br/>2）如VIP 密码已设置，积分抵扣需输入；</p>
-             <p><font color="red" th:text="${message}"></font></p>
+             <p><font color="red" th:text="${#httpServletRequest.getParameter('message')}" id="msg"></font></p>
         </aside>
 
 
@@ -76,7 +76,7 @@
             </div>
               <div class="cell-item">
                 <div class="cell-left">* VIP密码 <i style="padding-right: 25px;"></i></div>
-                <div class="cell-right"><input type="password" id="vippassword" class="cell-input" name="vippassword" placeholder="请输入VIP密码" autocomplete="off" /></div>
+                <div class="cell-right"><input type="password" id="vippassword" class="cell-input" name="vippassword" placeholder="六位纯数字" autocomplete="off" /></div>
             </div>
             <!--<p id="demo"></p>-->
 
@@ -85,16 +85,15 @@
             <a href="javascript:;" class="btn-block btn-primary" id="J_OpenKeyBoard">确认注册</a>
         </div>
          <div class="m-button demo-pitch">
-            <a href="/login" class="btn-block btn-hollow" id="J_OpenKeyBoard">我已开卡</a>
+            <a href="/wechat/authorize" class="btn-block btn-hollow" id="J_OpenKeyBoard">我已开卡</a>
         </div>
     </section>
   </form>
 </section>
 <!--<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>-->
 <script src="/js/ydui/ydui.js"></script>
-<script src="/js/sports/getCode.js"></script>
-<script src="/js/sports/reg.js"></script>
-<script src="/js/sports/msg.js"></script>
+<script src="/js/sports/getCode2.js?1231"></script>
+<script src="/js/sports/reg.js?a=233"></script>
 
 </body>
 </html>

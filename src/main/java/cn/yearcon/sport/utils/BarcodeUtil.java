@@ -64,8 +64,8 @@ public class BarcodeUtil {
             return;
         }
 
-        Code128Bean bean = new Code128Bean();
-
+        Code39Bean bean = new Code39Bean();
+        //ITF14Bean bean=new ITF14Bean();
         // 精细度
         final int dpi = 150;
         // module宽度
@@ -73,9 +73,10 @@ public class BarcodeUtil {
 
         // 配置对象
         bean.setModuleWidth(moduleWidth);
-        //bean.setWideFactor(3);
-        bean.doQuietZone(false);
-
+        bean.setWideFactor(3);
+        bean.doQuietZone(true);//设置两端留白
+        //bean.setIntercharGapWidth(0.02);
+        //bean.setFontSize(0);//不显示内容
         String format = "image/png";
         try {
 
@@ -94,8 +95,9 @@ public class BarcodeUtil {
     }
 
     public static void main(String[] args) {
-        String msg = "13058720637";
+        String msg = "  13058720637  ";
         String path = "I:/barcode.png";
+
         generateFile(msg, path);
     }
 }

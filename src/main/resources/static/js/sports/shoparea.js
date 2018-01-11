@@ -7,7 +7,7 @@ $.getScript("http://res.wx.qq.com/open/js/jweixin-1.1.0.js", function () {
         url: "/wechat/getApi?url="+encodeURIComponent(window.location.href),
         success: function (data) {
             wx.config({
-                debug: true,
+                debug: false,
                 appId: data.appid,
                 timestamp: data.timestamp,
                 nonceStr: data.nonceStr,
@@ -75,19 +75,20 @@ function ajaxloadinfo(coordinate){
         if(json.status==1){
             setStoreInfoList(json.lists);
         }else{
-
+            YDUI.dialog.loading.close();
+            YDUI.dialog.toast("加载失败",1500);
         }
     });
 }
 function setStoreInfoList(list){
     var $list=$("#list");
-    var $store=$("#store").clone().show();
     //console.log(list);
     for(var i in list){
+        var $store=$("#store").clone().show();
         $store.find(".name").html(list[i].name);
         $store.find(".address").html(list[i].address);
         $store.find(".phone").html(list[i].phone);
-        $store.find(".distance").html(list[i].distance);
+        $store.find(".distance").html(list[i].distance+"km");
         $store.find("input[name=coordinate]").val(list[i].coordinate);
         $store.appendTo($list);
     }
@@ -95,7 +96,7 @@ function setStoreInfoList(list){
     setClickThing();
 }
 function setClickThing() {
-    $(".weui-media-box_appmsg").on("click",function(){
+    $(".weui-media-box_appmsg").on("click touchstart",function(){
         var coordinate=$(this).find("input[name=coordinate]").val();
         var name=$(this).find(".name").html();
         var address=$(this).find(".address").html();
@@ -109,7 +110,7 @@ function setClickThing() {
             longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
             name: name, // 位置名
             address: address, // 地址详情说明
-            scale: 5, // 地图缩放级别,整形值,范围从1~28。默认为最大
+            scale: 10, // 地图缩放级别,整形值,范围从1~28。默认为最大
             infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
         });
     })

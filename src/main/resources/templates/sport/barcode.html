@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"/>
     <title>会员条码</title>
     <link rel="stylesheet" href="css/weui-master/weui.css"/>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <style type="text/css">
         img {
             width: 100%;
         }
+        .weui-btn_primary{
+            background-color: #d51d27;
+            position:fixed;
+            bottom:0;
+        }
     </style>
+    <script src="/js/sports/barcode.js"></script>
 </head>
 <body>
 <div class="container" id="container">
@@ -27,7 +34,14 @@
 
     </div>
 
+    <div class="page__ft j_bottom">
+        <div class="page button js_show">
 
+            <div class="page__bd page__bd_spacing">
+                <a href="javascript:void(0)" class="weui-btn weui-btn_primary" id="relieve">解绑微信</a>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
