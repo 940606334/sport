@@ -13,6 +13,7 @@
         resetStr: '重新获取验证码'// 倒计时结束后按钮显示文本 [可选，默认：重新获取验证码]
     });
 
+
     $getCode.on('click', function () {
         var $this = $(this);
         var pattern=/(^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$)|(^0{0,1}1[3|4|5|6|7|8|9][0-9]{9}$)/;
@@ -30,8 +31,8 @@
                 dialog.loading.close();
                 dialog.toast(result.msg, 1500);
             }else{
-                $.post(getcodeurl,param,function (result) {
-                    var data=JSON.parse(result);
+                $.post(getcodeurl,param,function (data) {
+                    //var data=JSON.parse(result);
                     console.log(data);
                     dialog.loading.close();
                     if(data.status==1){
@@ -52,6 +53,8 @@
             dialog.toast('已发送', 'success', 1500);
         }, 800);*/
     });
-
+   /* $("input[name=checkcode]").focus(function(){
+        $getCode.click()
+    });*/
 }(window, jQuery);
 

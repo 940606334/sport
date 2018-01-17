@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -90,7 +92,8 @@ public class SportsUsersotherService {
      */
     public String postInterface(SportsUsersotherEntity entity){
         RegVip regVip=new RegVip();
-        regVip.setBirthday(entity.getVipbirthday());
+        String birthday=entity.getVipbirthday();
+        regVip.setBirthday(parseDate(birthday));
         regVip.setCheckcode(entity.getCheckcode());
         regVip.setMobile(entity.getMobile());
         regVip.setName(entity.getTruename());
@@ -108,6 +111,24 @@ public class SportsUsersotherService {
         return json;
     }
 
+    /**
+     * 日期时间转换
+     * @param str
+     * @return
+     */
+    public String parseDate(String str){
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy年MM月dd日");
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+        String birthday="19961111";
+        try {
+            Date date=simpleDateFormat.parse(str);
+            birthday=sdf.format(date);
+            //System.out.println(birthday);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return birthday;
+    }
 
     public SportsUsersotherEntity findByMObile(String mobile){
         return sportsUsersotherRepository.findByMobile(mobile);

@@ -9,13 +9,15 @@
     <meta content="telephone=no" name="format-detection"/>
     <link rel="stylesheet" href="/css/ydui/ydui.css?rev=@@hash"/>
     <link rel="stylesheet" href="/css/ydui/demo.css"/>
+
+    <link href="/css/iosSelect.css"  rel="stylesheet"/>
     <script src="/js/ydui/ydui.flexible.js"></script>
     <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="http://apps.bdimg.com/libs/jquery.cookie/1.4.1/jquery.cookie.js"></script>
     <script src="/js/weixin/location.js"></script>
-    <!--<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>-->
-    <!--<script></script>
-    <script src="sportsjs/reg.js"></script>-->
+    <script src="/js/iosSelect.js"></script>
+
+    <script src="/js/dateSelect.js"></script>
 </head>
 <body>
 <section class="g-flexview">
@@ -24,7 +26,8 @@
     <section class="g-scrollview">
 
          <aside class="demo-tip">
-             <p>1）生日填报后不可修改，如需修改请返回聊天窗口联系客服；<br/>2）如VIP 密码已设置，积分抵扣需输入；</p>
+             <p>1)生日填写后不可修改,如填写错误,请携带身份证至附近门店修改.<br/>
+                 2)如设置VIP密码,则积分抵现时需输入VIP密码.</p>
              <p><font color="red" th:text="${#httpServletRequest.getParameter('message')}" id="msg"></font></p>
         </aside>
 
@@ -38,7 +41,7 @@
                 <div class="cell-left">* 验证码 <i style="padding-right: 30px;"></i></div>
                 <div class="cell-right">
                     <input type="number" pattern="[0-9]*" class="cell-input" name="checkcode" id="v_code" placeholder="请输入短信验证码" autocomplete="off" />
-                    <a href="javascript:;" class="btn btn-warning" id="J_GetCode">获取短信验证码</a>
+                    <a href="javascript:;" class="btn btn-warning" id="J_GetCode">获取验证码</a>
                 </div>
             </div>
                    <div class="cell-item">
@@ -62,8 +65,16 @@
                 </label>
             </div>-->
             <div class="cell-item">
-                <div class="cell-left">* 生日 <i style="padding-right: 45px;"></i></div>
-                <div class="cell-right"><input type="text" id="vipbirthday" class="cell-input" name="vipbirthday" placeholder="如：19910718" autocomplete="off" /></div>
+                <div class="cell-left">* 生日 <i style="padding-right: 45px;"></i>
+                    <div class="form-item item-line" id="selectDate">
+                        <div class="pc-box">
+                            <span data-year="" data-month="" data-date="" id="showDate">点击这里选择时间</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cell-right">
+                    <input type="hidden" id="vipbirthday" class="cell-input" name="vipbirthday"/>
+                </div>
             </div>
 
             <div class="cell-item">
@@ -75,8 +86,8 @@
                 </label>
             </div>
               <div class="cell-item">
-                <div class="cell-left">* VIP密码 <i style="padding-right: 25px;"></i></div>
-                <div class="cell-right"><input type="password" id="vippassword" class="cell-input" name="vippassword" placeholder="六位纯数字" autocomplete="off" /></div>
+                <div class="cell-left"> VIP密码 <i style="padding-right: 25px;"></i></div>
+                <div class="cell-right"><input type="password" id="vippassword" class="cell-input" name="vippassword" placeholder="六位纯数字(选填)" autocomplete="off" /></div>
             </div>
             <!--<p id="demo"></p>-->
 
@@ -92,8 +103,8 @@
 </section>
 <!--<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>-->
 <script src="/js/ydui/ydui.js"></script>
-<script src="/js/sports/getCode2.js?1231"></script>
-<script src="/js/sports/reg.js?a=233"></script>
+<script src="/js/sports/getCode2.js?v=asdd2312"></script>
+<script src="/js/sports/reg.js?a=23311"></script>
 
 </body>
 </html>

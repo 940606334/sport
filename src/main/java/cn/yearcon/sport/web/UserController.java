@@ -60,13 +60,17 @@ public class UserController {
         Cookie cookie=CookieUtil.get(request,"vipid");
         String vipid=cookie.getValue();
         String json= sportApiService.getIntegralList(vipid);
-        Integer status=(Integer) JSONPath.read(json, "$.status");
+        Gson gson=new Gson();
+        JsonResult jsonResult=gson.fromJson(json, JsonResult.class);
+        logger.info(jsonResult.toString());
+        model.addAttribute("list",jsonResult.getLists());
+        /*Integer status=(Integer) JSONPath.read(json, "$.status");
         if(status==1){
             JSONArray list = (JSONArray) JSONPath.read(json, "$.lists");
             model.addAttribute("list",list);
         }else{
             logger.debug("没有找到积分列表");
-        }
+        }*/
         json=sportApiService.getIntegral(vipid);
         String leaveintegral=(String)JSONPath.read(json,"$.msg");
         model.addAttribute("leaveintegral",leaveintegral);
@@ -81,16 +85,11 @@ public class UserController {
         String vipid=cookie.getValue();
         //String url=interfaceUrl+"&app_act=retail.list&vipid="+vipid;
         String json= sportApiService.getBillList(vipid);
-        Integer status=(Integer)JSONPath.read(json,"$.status");
-        if(status==1){
-            JSONArray list=(JSONArray) JSONPath.read(json,"$.lists");
-            if(list.size()==0){
-                logger.debug("账单记录为空");
-            }
-            model.addAttribute("list",list);
-        }else{
-            logger.debug("无相关账单");
-        }
+        Gson gson=new Gson();
+        JsonResult jsonResult=gson.fromJson(json, JsonResult.class);
+        logger.info(jsonResult.toString());
+        model.addAttribute("list",jsonResult.getLists());
+        model.addAttribute("message",jsonResult.getMsg());
         return "user/bill";
     }
     /**

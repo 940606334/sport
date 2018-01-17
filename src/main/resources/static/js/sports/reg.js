@@ -79,6 +79,11 @@ function checkvipinfo(){
         dialog.toast('姓名不能为空', 1500);
         return false;
     }
+    var namereg=/^[\u2E80-\u9FFF]+$/;//Unicode编码中的汉字范围
+    if(!namereg.test(truename)){
+        dialog.toast('输入的姓名包含字母或数字', 1500);
+        return false;
+    }
     var vipsex=$("#vipsex").val();
     if(!vipsex){
         dialog.toast('请选择性别', 1500);
@@ -89,12 +94,17 @@ function checkvipinfo(){
         dialog.toast("请输入鞋码",1500);
         return false;
     }*/
-    var vipbirthday=$("#vipbirthday").val();
-    pattern=/^(19|20)\d{2}(1[0-2]|0?[1-9])(0?[1-9]|[1-2][0-9]|3[0-1])$/;
+    var birthday=$("#showDate").html();
+    if(!birthday){
+        dialog.toast("请选择时间",1500);
+        return false;
+    }
+    $("#vipbirthday").val(birthday);
+    /*pattern=/^(19|20)\d{2}(1[0-2]|0?[1-9])(0?[1-9]|[1-2][0-9]|3[0-1])$/;
     if(!pattern.test(vipbirthday)){
         dialog.toast("请输入生日,正确格式如20110506",1500);
         return false;
-    }
+    }*/
     var storeid=$("#storeid").val();
     if(!storeid){
         dialog.toast("请选择门店",1500);
@@ -102,14 +112,16 @@ function checkvipinfo(){
     }
     var vippassword=$("#vippassword").val();
     var reg=/^\d{6}$/;
-    if(!reg.test(vippassword)){
-        dialog.toast("密码必须六位纯数字",1500);
-        return false;
+    if(vippassword){
+        if(!reg.test(vippassword)){
+            dialog.toast("密码必须六位纯数字",1500);
+            return false;
+        }
     }
     var param={mobile:mobile,
                checkcode:checkcode,
                vipsex:vipsex,
-               vipbirthday:vipbirthday,
+               vipbirthday:birthday,
                storeid:storeid,
                vippassword:vippassword};
     return param;

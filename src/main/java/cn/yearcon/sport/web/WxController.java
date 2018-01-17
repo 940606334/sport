@@ -117,6 +117,10 @@ public class WxController {
             SportsUsersEntity sportsUsersEntity=sportsUserService.findByOpenid(openid);
             if(sportsUsersEntity==null){
                 //redirectAttributes.addAttribute("message","请注册");
+                Cookie cookieurl=CookieUtil.get(request,"regorloginUrl");
+                if(cookieurl!=null){
+                    return "redirect:"+cookieurl.getValue();
+                }
                 return "redirect:/login";
             }
             vipid=sportsUsersEntity.getVipid()+"";
@@ -136,6 +140,7 @@ public class WxController {
             sportsUserService.checkvip(wechatUser,vipid);
         }catch (Exception e){
             redirectAttributes.addAttribute("message",e.getMessage());
+            CookieUtil.set(response,"regorloginUrl","/login");
             return "redirect:/login";
         }
         //验证机构id
@@ -145,14 +150,17 @@ public class WxController {
         String areaCode=(String) JSONPath.read(json,"$.item.c_customer_id");
         if(areaCode==null){
             redirectAttributes.addAttribute("message","所属区域为空");
+            CookieUtil.set(response,"regorloginUrl","/login");
             return "redirect:/login";
         }
         if (webid.equals(areaCode)){
+            CookieUtil.set(response,"regorloginUrl","/login",0);
             return "redirect:/index";
         }else{
             String name=appmap.get("name");
             String name1=sysOfficeService.findNameByCode(areaCode);
             redirectAttributes.addAttribute("message","您的会员卡不在“"+name+"”服务区，请关注 “"+name1+"”");
+            CookieUtil.set(response,"regorloginUrl","/login");
             return "redirect:/login";
         }
 

@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.Map;
 
 
@@ -31,7 +33,13 @@ public class LoginController {
     private String interfaceUrl;
 
     @RequestMapping(value="/login",method = RequestMethod.GET)
-    public String login(){
+    public String login(HttpServletRequest request, HttpServletResponse response){
+        Cookie cookie=CookieUtil.get(request,"regorloginUrl");
+        if(cookie==null){
+            CookieUtil.set(response,"regorloginUrl","/login");
+            return "redirect:/wechat/authorize";
+        }
+        CookieUtil.set(response,"regorloginUrl","/login",0);
         return "sport/login";
     }
 
@@ -42,20 +50,8 @@ public class LoginController {
 
     @RequestMapping(value="getCode",method = RequestMethod.POST)
     @ResponseBody
-    public String getCode(String mobile){
-        String json=sportApiService.getCheckcode(mobile);
-        Gson gson=new Gson();
-        JsonResult jsonResult=gson.fromJson(json,JsonResult.class);
-        if(jsonResult.getStatus()==1){
-            SportsSmscodeEntity sportsSmscodeEntity=sportsSmscodeService.findByMobile(mobile);
-            if(sportsSmscodeEntity==null){
-                sportsSmscodeEntity=new SportsSmscodeEntity();
-                sportsSmscodeEntity.setMobile(mobile);
-            }
-            sportsSmscodeEntity.setCode(jsonResult.getMsg());
-            sportsSmscodeService.saveMobile(sportsSmscodeEntity);
-        }
-        return json;
+    public JsonResult getCode(String mobile){
+       return  sportsSmscodeService.getCheckCode(mobile);
     }
     @Autowired
     private SportsUsersotherService sportsUsersotherService;
@@ -69,10 +65,12 @@ public class LoginController {
         SportsSmscodeEntity sportsSmscodeEntity=sportsSmscodeService.findByMobile(mobile);
         if(sportsSmscodeEntity==null){
             redirectAttributes.addAttribute("message","验证码不正确");
+            CookieUtil.set(response,"regorloginUrl","/login");
             return "redirect:/login";
         }
         if(!sportsSmscodeEntity.getCode().equals(checkcode)){
             redirectAttributes.addAttribute("message","验证码不正确");
+            CookieUtil.set(response,"regorloginUrl","/login");
             return "redirect:/login";
         }
         //验证手机号有没有注册过
@@ -84,6 +82,7 @@ public class LoginController {
             Integer status=(Integer) JSONPath.read(json,"$.status");
             if(status==0){
                 redirectAttributes.addAttribute("message","尚未开卡请注册");
+                CookieUtil.set(response,"regorloginUrl","/login");
                 return "redirect:/login";
             }
             vipid=(Integer) JSONPath.read(json,"$.vipid");
@@ -100,6 +99,7 @@ public class LoginController {
             return "redirect:/wechat/authorize";
         }else{
             redirectAttributes.addAttribute("message","认证失败");
+            CookieUtil.set(response,"regorloginUrl","/login");
             return "redirect:/login";
         }
 

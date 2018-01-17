@@ -35,8 +35,10 @@ public class MyWebAppConfigurer  extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/getVipidByMobile")
                 .excludePathPatterns("/getStore")
                 .excludePathPatterns("/checkmobile")
-                .excludePathPatterns("/wechat/**");
-        registry.addInterceptor(new UploadInterceptor()).addPathPatterns("/toUpload");
+                .excludePathPatterns("/wechat/**")
+                .excludePathPatterns("/getShoparea")
+                .excludePathPatterns("/wxmsg/*");
+        //registry.addInterceptor(new UploadInterceptor()).addPathPatterns("/toUpload");
         super.addInterceptors(registry);
     }
    /*@Override

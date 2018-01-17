@@ -36,7 +36,7 @@ privilegePagecode: 1
 
 #logconfig
 logging:
-  file: /usr/java/sprots.log
+  file: /usr/java/springbootDemo/sprot.log
 
 #http:
 #  maxTotal: 100

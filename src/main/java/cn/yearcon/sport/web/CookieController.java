@@ -30,6 +30,7 @@ public class CookieController {
         }
         CookieUtil.set(response,"vipid",null,0);
         redirectAttributes.addAttribute("message","已成功解绑微信");
+        CookieUtil.set(response,"regorloginUrl","/login");
         return "redirect:/login";
     }
 }

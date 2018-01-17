@@ -88,21 +88,26 @@ function setStoreInfoList(list){
         $store.find(".name").html(list[i].name);
         $store.find(".address").html(list[i].address);
         $store.find(".phone").html(list[i].phone);
-        $store.find(".distance").html(list[i].distance+"km");
+        var distance=list[i].distance+"";
+        distance=distance.substr(0,distance.indexOf(".")+3);
+        $store.find(".distance").html(distance+"km");
         $store.find("input[name=coordinate]").val(list[i].coordinate);
         $store.appendTo($list);
     }
     YDUI.dialog.loading.close();
-    setClickThing();
+    //setClickThing();
 }
-function setClickThing() {
-    $(".weui-media-box_appmsg").on("click touchstart",function(){
-        var coordinate=$(this).find("input[name=coordinate]").val();
-        var name=$(this).find(".name").html();
-        var address=$(this).find(".address").html();
+function setClickThing(obj) {
+      //alert("123");
+   // $(".weui-media-box_appmsg").click(function(){
+        var coordinate=$(obj).find("input[name=coordinate]").val();
+        var name=$(obj).find(".name").html();
+        var address=$(obj).find(".address").html();
         var arr=coordinate.split(",");
-        var latitude = arr[0]; // 纬度，浮点数，范围为90 ~ -90
-        var longitude = arr[1]; // 经度，浮点数，范围为180 ~ -180。
+        var latitude = Number(arr[0].substr(0,arr[0].indexOf(".")+6)); // 纬度，浮点数，范围为90 ~ -90
+        //console.log(latitude);
+        var longitude = Number(arr[1].substr(0,arr[1].indexOf(".")+6)); // 经度，浮点数，范围为180 ~ -180。
+        //console.log(longitude);
         //console.log(latitude);
         //console.log(longitude);
         wx.openLocation({
@@ -113,6 +118,6 @@ function setClickThing() {
             scale: 10, // 地图缩放级别,整形值,范围从1~28。默认为最大
             infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
         });
-    })
+    //})
 
 }
