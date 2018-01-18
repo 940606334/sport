@@ -7,19 +7,24 @@
     <link th:href="@{/css/mzu/fonts/iconfont.css}" rel="stylesheet"/>
     <link th:href="@{/css/mzu/bass.css}" rel="stylesheet"/>
     <link th:href="@{/css/mzu/index.css}" rel="stylesheet"/>
+
     <style>
     	.balance li {
-    width: 33%;
-    float: left;
-    text-align: center;
-    background-color: #fff;
-    border-right: 1px solid #f1f1f1;
-    border-bottom: 1px solid #f1f1f1;
-}
+            width: 33%;
+            float: left;
+            text-align: center;
+            background-color: #fff;
+            border-right: 1px solid #f1f1f1;
+            border-bottom: 1px solid #f1f1f1;
+        }
     </style>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+
 </head>
 <body>
- 
+<p><font color="red" th:text="${#httpServletRequest.getParameter('message')}" id="msg" th:hidden="true"></font></p>
     <div class="all_box all_boxNodown">
     		<div class="circle2-head">
 			<div class="Frjbg"><img src="img/home1.jpg"/></div>

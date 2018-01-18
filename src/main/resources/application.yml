@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 8002
   context-path:
   session:
     cookie:

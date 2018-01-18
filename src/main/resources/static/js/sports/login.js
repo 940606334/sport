@@ -15,6 +15,7 @@ function vipcheck(){
 		return;
 	}
 	$("#mobileForm").submit();
+    YDUI.dialog.loading.open("正在提交中");
 }
 function checkMobileForm(){
     var dialog = YDUI.dialog;

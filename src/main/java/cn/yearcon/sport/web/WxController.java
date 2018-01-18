@@ -157,11 +157,13 @@ public class WxController {
             CookieUtil.set(response,"regorloginUrl","/login",0);
             return "redirect:/index";
         }else{
-            String name=appmap.get("name");
+            /*String name=appmap.get("name");
             String name1=sysOfficeService.findNameByCode(areaCode);
             redirectAttributes.addAttribute("message","您的会员卡不在“"+name+"”服务区，请关注 “"+name1+"”");
             CookieUtil.set(response,"regorloginUrl","/login");
-            return "redirect:/login";
+            return "redirect:/login";*/
+            CookieUtil.set(response,"regorloginUrl","/login",0);
+            return "redirect:/index";
         }
 
     }

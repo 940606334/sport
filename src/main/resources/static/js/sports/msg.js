@@ -1,7 +1,8 @@
 $(document).ready(function(){
     var msg=$("#msg").text();
     if(msg){
-        var dialog = YDUI.dialog;
-        dialog.toast(msg, 1500);
+       YDUI.dialog.toast(msg, 1500);
+       //alert(msg);
+       console.log(msg);
     }
 })

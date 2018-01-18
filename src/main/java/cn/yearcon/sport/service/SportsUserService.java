@@ -52,6 +52,9 @@ public class SportsUserService {
         sportsUsersEntity.setAddtime(new Date());
         String json=sportApiService.getVipInfoByid(vipid);
         String areaCode=(String) JSONPath.read(json, "$.item.c_customer_id");
+        if(areaCode==null){
+            throw new ServiceException("账号错误,所属区域为空");
+        }
         sportsUsersEntity.setWebid(Integer.parseInt(areaCode));
         sportsUsersRepository.save(sportsUsersEntity);
 

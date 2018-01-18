@@ -6,8 +6,8 @@
     var nowYear = now.getFullYear();
     var nowMonth = now.getMonth() + 1;
     var nowDate = now.getDate();
-    showDateDom.attr('data-year', nowYear);
-    showDateDom.attr('data-month', nowMonth);
+    showDateDom.attr('data-year', 1980);
+    showDateDom.attr('data-month', 6);
     showDateDom.attr('data-date', nowDate);
     // 数据初始化
     function formatYear (nowYear) {

@@ -57,8 +57,7 @@ function regvip(){
         return;
     }
     $("#vipregform").submit();
-
-
+    YDUI.dialog.loading.open("正在提交中");
 }
 
 function checkvipinfo(){

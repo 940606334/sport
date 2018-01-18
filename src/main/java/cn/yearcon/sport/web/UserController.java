@@ -234,7 +234,8 @@ public class UserController {
     @Autowired
     private SportsFeedbackService sportsFeedbackService;
     @RequestMapping(value = "/saveFeedback",method = RequestMethod.POST)
-    public String saveFeedback(SportsFeedbackEntity sportsFeedbackEntity,HttpServletRequest request){
+    public String saveFeedback(SportsFeedbackEntity sportsFeedbackEntity,HttpServletRequest request,
+    RedirectAttributes redirectAttributes){
         Cookie cookie=CookieUtil.get(request,"vipid");
         Integer vipid=Integer.parseInt(cookie.getValue());
         SportsUsersEntity sportsUsersEntity=sportsUserService.findByVipid(vipid);
@@ -244,6 +245,7 @@ public class UserController {
         sportsFeedbackEntity.setAuditstatus(0);
         sportsFeedbackEntity.setAddtime(new Date());
         sportsFeedbackService.saveFeedback(sportsFeedbackEntity);
+        redirectAttributes.addAttribute("message","已成功提交你的建议");
         return "redirect:/index";
     }
 }

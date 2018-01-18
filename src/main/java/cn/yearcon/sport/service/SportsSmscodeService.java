@@ -54,12 +54,12 @@ public class SportsSmscodeService {
             if(daycount==null){
                 daycount=0;
             }
-            Date addtime=sportsSmscodeEntity.getAddtime();
-            if (addtime==null){
-                addtime=new Date();
-                sportsSmscodeEntity.setAddtime(addtime);
+            Date edittime=sportsSmscodeEntity.getEdittime();
+            if (edittime==null){
+                edittime=new Date();
+                sportsSmscodeEntity.setEdittime(edittime);
             }
-            int i=comparetime(new Date(),addtime);
+            int i=comparetime(new Date(),edittime);
             //时间相差一天,重新设置次数
             if(i>0){
                 daycount=0;
@@ -74,7 +74,7 @@ public class SportsSmscodeService {
                 if(jsonResult.getStatus()==1){
                     sportsSmscodeEntity.setCode(jsonResult.getMsg());
                     sportsSmscodeEntity.setDaycount(daycount);
-                    sportsSmscodeEntity.setEdittime(new Date());
+                    sportsSmscodeEntity.setEdittime(new Date());//重新设置修改时间
                     saveMobile(sportsSmscodeEntity);
                 }
                 return jsonResult;
@@ -82,6 +82,12 @@ public class SportsSmscodeService {
         }
     }
 
+    /**
+     * 比较两个日期相差天数
+     * @param date1
+     * @param Date2
+     * @return
+     */
     public int comparetime(Date date1, Date Date2){
         long differ=date1.getTime()-Date2.getTime();
         return (int)(differ/1000/3600/24);

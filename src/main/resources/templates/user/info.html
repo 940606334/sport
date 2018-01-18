@@ -18,7 +18,8 @@
     <section class="g-scrollview">
 
         <aside class="demo-tip">
-            <p>1）生日填报后不可修改，如需修改请返回聊天窗口联系客服；<br/>2）如VIP 密码已设置，积分抵扣需输入；</p>
+            <p>1)生日填写后不可修改,如填写错误,请携带身份证至附近门店修改.
+                <br/>2)如设置VIP密码,则积分抵现时需输入VIP密码.</p>
             <p><font color="red" th:text="${#httpServletRequest.getParameter('message')}" id="msg"></font></p>
         </aside>
 
@@ -35,10 +36,8 @@
                     <div class="cell-left">* 性别 <i style="padding-right: 45px;"></i></div>
                     <label class="cell-right cell-arrow">
                         <select class="cell-select" th:switch="${map.sex}" name="sex" id="v_sex">
-                            <option th:case="'M'" value="M">男</option>
-                            <option th:case="'W'" value="w">女</option>
-                            <option value="M">男</option>
-                            <option value="W">女</option>
+                            <option value="M" th:checked="${map.sex==M}?'true':'false'">男</option>
+                            <option value="W" th:checked="${map.sex==W}?'true':'false'">女</option>
                         </select>
                     </label>
                 </div>

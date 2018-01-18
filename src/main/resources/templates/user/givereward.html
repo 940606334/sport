@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>打赏点评</title>
+		<link rel="stylesheet" type="text/css" href="css/default.css"/>
+    	<link rel="stylesheet" href="css/style.css?a=1"/>
+    	<style>
+        .cd-form {
+            width: 90%;
+            max-width: 600px;
+            margin: 0em auto;
+        }
+        .cd-form h4 {
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+                /*font-size: 1.6rem;*/
+                border-bottom: 1px solid #ecf0f1;
+            }
+        .cd-form h4>p {
+			margin-bottom: 8px;
+		}
+        .btn{
+        	display:block;
+			border:1px solid #CCC;
+			background:#FFF;
+        }
+    </style>
+	</head>
+	<body>
+		<div class="container">
+			
+			<form action="#" method="post" class="cd-form floating-labels">
+				<h4>
+			    <p>感谢您一直以来对意尔康的大力支持!</p>
+			  </h4>
+				<input type="hidden" name="guideid" th:value="${sportsGivereward.guideid}"/>
+				<input type="hidden" name="vipid" th:value="${sportsGivereward.vipid}"/>
+				<input type="hidden" name="webid" th:value="${sportsGivereward.webid}"/>
+				<label>打赏积分:</label>
+				<input type="text" name="giveintegral" th:value="${sportsGivereward.giveintegral}"/><br/>
+				<ul class="cd-form-list">
+				<li><input type="radio" value="1" name="type" checked="checked"/>
+				<label>满意</label>
+				</li>
+				<li><input type="radio" value="0" name="type"/>
+				<label>不满意</label>
+				</li>
+				</ul>
+				<textarea name="explain" 
+					placeholder="请您尽可能详细的描述您遇到的问题，方便小意跟踪解决"
+				 th:text="${sportsGivereward.explain}"></textarea>
+				<a href="javascript:;"  class="btn btn-primary">提交</a>
+			</form>
+		</div>
+	</body>
+</html>

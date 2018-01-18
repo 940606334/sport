@@ -42,12 +42,12 @@ public class RegController {
     //注册页面
     @RequestMapping(value="/reg",method = RequestMethod.GET)
     public String reg(HttpServletRequest request, HttpServletResponse response){
-        /*Cookie cookie=CookieUtil.get(request,"regorloginUrl");
+        Cookie cookie=CookieUtil.get(request,"regorloginUrl");
         if(cookie==null){
             CookieUtil.set(response,"regorloginUrl","/reg");
             return "redirect:/wechat/authorize";
         }
-        CookieUtil.set(response,"regorloginUrl","/reg",0);*/
+        CookieUtil.set(response,"regorloginUrl","/reg",0);
         return "sport/reg";
         //return "sport/reg";
     }

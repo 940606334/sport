@@ -103,23 +103,7 @@ public class LoginController {
             return "redirect:/login";
         }
 
-       /* SportsUsersEntity sportsUsersEntity = sportsUserService.findByVipid(vipid);
-        if(sportsUsersEntity==null){
-            return "redirect:/wechat/authorize";
-        }
-        //验证机构id
-        String json=sportApiService.getVipInfoByid(vipid);
-        String areaCode=(String) JSONPath.read(json,"$.item.c_customer_id");
-        Map<String,String> map=sportsWxService.getAppid(request);
-        String webid= map.get("webid");
-        if(!webid.equals(areaCode)){
-            String name=map.get("name");
-            String name1=sysOfficeService.findNameByCode(areaCode);
-            logger.info("该域名所在的webid为"+webid+",该账号的webid为"+areaCode);
-            redirectAttributes.addAttribute("message","您的会员卡不在“"+name+"”服务区，请关注 “"+name1+"”");
-            return "redirect:/login";
-        }
-        return "redirect:/index";*/
+
     }
 
 
