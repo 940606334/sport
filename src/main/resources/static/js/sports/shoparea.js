@@ -1,5 +1,13 @@
 $.getScript("http://res.wx.qq.com/open/js/jweixin-1.1.0.js", function () {
     YDUI.dialog.loading.open("门店加载中....");
+    /*var coordinate=$.cookie("VPIAO_MOBILE_CURRENTCITY1");
+    if(coordinate){
+        var reg =/^[-\+]?\d+(\.\d+)\,[-\+]?\d+(\.\d+)$/;
+        if(reg.test(coordinate)){
+            ajaxloadinfo(coordinate);
+            return;
+        }
+    }*/
     $.ajax({
         type: "get",
         dataType: "json",
@@ -40,11 +48,14 @@ $.getScript("http://res.wx.qq.com/open/js/jweixin-1.1.0.js", function () {
                         var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                         var speed = res.speed; // 速度，以米/每秒计
                         var accuracy = res.accuracy; // 位置精度
-
-                        var coordinate = latitude + "," + longitude;
-                        //console.log(coordinate);
-                        $.cookie('VPIAO_MOBILE_CURRENTCITY1', coordinate, { expires: 1, path: '/' });
-                        //YDUI.dialog.loading.close();
+                        var coordinate=null;
+                        if(latitude&&longitude){
+                            coordinate = latitude + "," + longitude;
+                            $.cookie('VPIAO_MOBILE_CURRENTCITY1', coordinate, { expires: 1, path: '/' });
+                        }
+                        if(!coordinate){
+                            dialog.toast("手机版本过低,无法获取地理位置",1500);
+                        }
                          ajaxloadinfo(coordinate);
 
                         //ajaxloadinfo();
@@ -69,9 +80,8 @@ $.getScript("http://res.wx.qq.com/open/js/jweixin-1.1.0.js", function () {
 function ajaxloadinfo(coordinate){
     var url="/getStore?coordinate="+coordinate;
     console.log(coordinate);
-    $.get(url,function(str){
+    $.get(url,function(json){
 
-        var json=JSON.parse(str);
         if(json.status==1){
             setStoreInfoList(json.lists);
         }else{
@@ -97,27 +107,30 @@ function setStoreInfoList(list){
     YDUI.dialog.loading.close();
     //setClickThing();
 }
+
+
 function setClickThing(obj) {
-      //alert("123");
-   // $(".weui-media-box_appmsg").click(function(){
-        var coordinate=$(obj).find("input[name=coordinate]").val();
-        var name=$(obj).find(".name").html();
-        var address=$(obj).find(".address").html();
-        var arr=coordinate.split(",");
-        var latitude = Number(arr[0].substr(0,arr[0].indexOf(".")+6)); // 纬度，浮点数，范围为90 ~ -90
-        //console.log(latitude);
-        var longitude = Number(arr[1].substr(0,arr[1].indexOf(".")+6)); // 经度，浮点数，范围为180 ~ -180。
-        //console.log(longitude);
-        //console.log(latitude);
-        //console.log(longitude);
-        wx.openLocation({
-            latitude: latitude, // 纬度，浮点数，范围为90 ~ -90
-            longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
-            name: name, // 位置名
-            address: address, // 地址详情说明
-            scale: 10, // 地图缩放级别,整形值,范围从1~28。默认为最大
-            infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
-        });
+    //alert("123");
+    // $(".weui-media-box_appmsg").click(function(){
+    var coordinate = $(obj).find("input[name=coordinate]").val();
+    var name = $(obj).find(".name").html();
+    var address = $(obj).find(".address").html();
+    var arr = coordinate.split(",");
+    var latitude = Number(arr[0].substr(0, arr[0].indexOf(".") + 6)); // 纬度，浮点数，范围为90 ~ -90
+    //console.log(latitude);
+    var longitude = Number(arr[1].substr(0, arr[1].indexOf(".") + 6)); // 经度，浮点数，范围为180 ~ -180。
+    //console.log(longitude);
+    //console.log(latitude);
+    //console.log(longitude);
+    //alert(coordinate);
+    wx.openLocation({
+        latitude: latitude, // 纬度，浮点数，范围为90 ~ -90
+        longitude: longitude, // 经度，浮点数，范围为180 ~ -180。
+        name: name, // 位置名
+        address: address, // 地址详情说明
+        scale: 10, // 地图缩放级别,整形值,范围从1~28。默认为最大
+        infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+    });
     //})
 
 }

@@ -113,4 +113,14 @@ public class SportApiService {
         String url=interfaceUrl+"user.edit?"+vipStr;
         return new HttpRequestUtils().getHttp(url);
     }
+
+    /**
+     * 修改会员认证
+     * @param vipid
+     * @return
+     */
+    public String authorizeVip(String vipid){
+        String url=interfaceUrl+"vip.authorize?"+vipid;
+        return new HttpRequestUtils().getHttp(url);
+    }
 }

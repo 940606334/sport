@@ -4,9 +4,12 @@ import cn.yearcon.sport.entity.SportsSmscodeEntity;
 import cn.yearcon.sport.json.JsonResult;
 import cn.yearcon.sport.repository.SportsSmscodeRepository;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.sound.sampled.Line;
 import javax.xml.crypto.Data;
 import java.util.Date;
 
@@ -16,6 +19,7 @@ import java.util.Date;
  **/
 @Service
 public class SportsSmscodeService {
+    private final Logger logger= LoggerFactory.getLogger(this.getClass());
     @Autowired
     private SportsSmscodeRepository sportsSmscodeRepository;
     @Autowired
@@ -36,16 +40,19 @@ public class SportsSmscodeService {
      */
     public JsonResult getCheckCode(String mobile){
         SportsSmscodeEntity sportsSmscodeEntity=findByMobile(mobile);
+        logger.info("手机短信验证码信息="+sportsSmscodeEntity);
         if(sportsSmscodeEntity==null){
             String json=sportApiService.getCheckcode(mobile);
             Gson gson=new Gson();
             JsonResult jsonResult=gson.fromJson(json,JsonResult.class);
+            logger.info("jsonResult="+jsonResult);
             if(jsonResult.getStatus()==1){
                 sportsSmscodeEntity=new SportsSmscodeEntity();
                 sportsSmscodeEntity.setMobile(mobile);
                 sportsSmscodeEntity.setCode(jsonResult.getMsg());
                 sportsSmscodeEntity.setAddtime(new Date());
                 sportsSmscodeEntity.setDaycount(0);
+                logger.info("保存短息信息"+sportsSmscodeEntity);
                 saveMobile(sportsSmscodeEntity);
             }
             return jsonResult;
@@ -57,7 +64,6 @@ public class SportsSmscodeService {
             Date edittime=sportsSmscodeEntity.getEdittime();
             if (edittime==null){
                 edittime=new Date();
-                sportsSmscodeEntity.setEdittime(edittime);
             }
             int i=comparetime(new Date(),edittime);
             //时间相差一天,重新设置次数
@@ -75,6 +81,7 @@ public class SportsSmscodeService {
                     sportsSmscodeEntity.setCode(jsonResult.getMsg());
                     sportsSmscodeEntity.setDaycount(daycount);
                     sportsSmscodeEntity.setEdittime(new Date());//重新设置修改时间
+                    logger.info("保存短息信息"+sportsSmscodeEntity);
                     saveMobile(sportsSmscodeEntity);
                 }
                 return jsonResult;

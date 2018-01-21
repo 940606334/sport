@@ -1,5 +1,7 @@
 package cn.yearcon.sport.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import java.io.IOException;
  **/
 @Controller
 public class UploadController {
+    private final Logger logger= LoggerFactory.getLogger(this.getClass());
     @RequestMapping(value="/toUpload")
     public String toUpload(){
         return "sport/upload";
@@ -31,6 +34,7 @@ public class UploadController {
         String filename=file.getOriginalFilename();
         String path = request.getSession().getServletContext().getRealPath("/");
         System.out.println(path);
+        logger.info("文件上传路径为:"+path);
         path=path+filename;
         //path=path+"static"+File.separator+filename;
         try {

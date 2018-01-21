@@ -1,9 +1,14 @@
 $.getScript("http://res.wx.qq.com/open/js/jweixin-1.1.0.js", function () {
-    /*if($.cookie("VPIAO_MOBILE_CURRENTCITY1")){
-        return;
-    }*/
     var dialog = YDUI.dialog;
     dialog.loading.open('获取门店数据中...');
+    var coordinate=$.cookie("VPIAO_MOBILE_CURRENTCITY1");
+    if(coordinate){
+        var reg =/^[-\+]?\d+(\.\d+)\,[-\+]?\d+(\.\d+)$/;
+        if(reg.test(coordinate)){
+            getStoreInfo(coordinate);
+            return;
+        }
+    }
     $.ajax({
         type: "get",
         dataType: "json",
@@ -42,13 +47,20 @@ $.getScript("http://res.wx.qq.com/open/js/jweixin-1.1.0.js", function () {
                         var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                         var speed = res.speed; // 速度，以米/每秒计
                         var accuracy = res.accuracy; // 位置精度
-
-                        var coordinate = latitude + "," + longitude;
+                        var coordinate=null;
+                        if(latitude&&longitude){
+                            coordinate = latitude + "," + longitude;
+                            $.cookie('VPIAO_MOBILE_CURRENTCITY1', coordinate, { expires: 1, path: '/' });
+                        }
                         console.log(coordinate);
-                        $.cookie('VPIAO_MOBILE_CURRENTCITY1', coordinate, { expires: 1, path: '/' });
                         getStoreInfo(coordinate);
                         //ajaxloadinfo();
                         //window.location.replace("/area.aspx");
+                    },
+                    fail:function () {
+                        alert('获取地理信息失败!');
+                        var coordinate="";
+                        getStoreInfo(coordinate);
                     },
                     cancel: function (res) {
                         alert('用户拒绝授权获取地理位置');

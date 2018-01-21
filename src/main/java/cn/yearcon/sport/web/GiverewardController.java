@@ -1,10 +1,14 @@
 package cn.yearcon.sport.web;
 
 import cn.yearcon.sport.entity.SportsGivereward;
+import cn.yearcon.sport.service.SportsGiverewardService;
 import cn.yearcon.sport.utils.CookieUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -24,9 +28,13 @@ public class GiverewardController {
         model.addAttribute("sportsGivereward",sportsGivereward);
         return "user/givereward";
     }
+    @Autowired
+    private SportsGiverewardService sportsGiverewardService;
 
-
-    public void saveGivereward(){
-
+    @RequestMapping(value="saveGivereward")
+    public String saveGivereward(SportsGivereward sportsGivereward,Model model){
+        sportsGiverewardService.save(sportsGivereward);
+        model.addAttribute("sportsGivereward",sportsGivereward);
+        return "user/givereward";
     }
 }

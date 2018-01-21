@@ -27,15 +27,17 @@ function getStoreInfo(coordinate){
     //var coordinate=$.cookie("VPIAO_MOBILE_CURRENTCITY1");
     var param={coordinate:coordinate};
 
-    $.post(url,param,function(result){
+    $.post(url,param,function(data){
         dialog.loading.close();
         var msg=$("#msg").text();
         if(msg){
             dialog.toast(msg, 1500);
         }
-        var data=JSON.parse(result);
+        //var data=JSON.parse(result);
         if(data.status=1){
             setStoreList(data.lists);
+        }else{
+            dialog.toast(data.msg, 1500);
         }
     })
 }
@@ -47,13 +49,18 @@ function setStoreList(list){
 
     storeid.append(option);
     for(var i in list){
-       option=$('<option value="'+list[i].id+'">'+list[i].name+'('+list[i].distance+'km)'+'</option>');
+        var distance=list[i].distance;
+        if(distance){
+            option=$('<option value="'+list[i].id+'">'+list[i].name+'('+distance+'km)'+'</option>');
+        }else{
+            option=$('<option value="'+list[i].id+'">'+list[i].name+'</option>');
+        }
        storeid.append(option);
     }
 }
 function regvip(){
-    var param=checkvipinfo();
-    if(!param){
+    var b=checkvipinfo();
+    if(!b){
         return;
     }
     $("#vipregform").submit();
@@ -117,11 +124,11 @@ function checkvipinfo(){
             return false;
         }
     }
-    var param={mobile:mobile,
+   /* var param={mobile:mobile,
                checkcode:checkcode,
                vipsex:vipsex,
                vipbirthday:birthday,
                storeid:storeid,
-               vippassword:vippassword};
-    return param;
+               vippassword:vippassword};*/
+    return true;
 }

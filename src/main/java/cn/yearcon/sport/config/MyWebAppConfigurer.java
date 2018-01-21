@@ -25,7 +25,8 @@ public class MyWebAppConfigurer  extends WebMvcConfigurerAdapter {
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
         registry.addInterceptor(new MyInterceptor1())
-                .addPathPatterns("/**")
+                .addPathPatterns("/user/**")
+                .addPathPatterns("/index")
                 .excludePathPatterns("/reg")
                 .excludePathPatterns("/regvip")
                 .excludePathPatterns("/login")

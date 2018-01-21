@@ -96,6 +96,9 @@ public class LoginController {
         //验证vipid是否为空
         if(vipid!=null){
             CookieUtil.set(response,"vipid",vipid.toString());
+            //ERP修改认证会员状态
+            String json=sportApiService.authorizeVip(vipid+"");
+            logger.info("ERP认证结果"+json);
             return "redirect:/wechat/authorize";
         }else{
             redirectAttributes.addAttribute("message","认证失败");

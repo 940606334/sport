@@ -10,6 +10,7 @@ import cn.yearcon.sport.service.SportsUsersotherService;
 import cn.yearcon.sport.service.SysOfficeService;
 import cn.yearcon.sport.utils.CookieUtil;
 import com.alibaba.fastjson.JSONPath;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class RegController {
     //获取商店列表
     @RequestMapping(value="getStore")
     @ResponseBody
-    public String getStore(HttpServletRequest request, String coordinate){
+    public JsonResult getStore(HttpServletRequest request, String coordinate){
         logger.info("coordinate="+coordinate);
         //1.得到请求的 服务器域名
         String serverName = request.getServerName();
@@ -63,7 +64,14 @@ public class RegController {
         String webid=officeEntity.getCode();//获取机构id
         logger.info("webid="+webid);
         //String url=interfaceUrl+"&app_act=store.list&v_cus_id="+webid+"&coordinate="+coordinate;
-        return sportApiService.getStoreInfo(webid,coordinate);
+        if(coordinate==null){
+            coordinate="";
+        }
+        String json=sportApiService.getStoreInfo(webid,coordinate);
+        logger.info("json="+json);
+        JsonResult jsonResult=new Gson().fromJson(json,JsonResult.class);
+        logger.info("jsonResult="+jsonResult);
+        return jsonResult;
     }
     @Autowired
     private SportApiService sportApiService;
