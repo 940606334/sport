@@ -17,7 +17,7 @@
             <div class="coupon-inner">
                 <div class="coupon-money">
                     <span>¥</span>
-                    <span class="sum" th:text="${coupon.amtdes}"></span><!--折扣内容-->
+                    <span class="sum" th:text="${coupon.vou_dis}"></span><!--折扣内容-->
                 </div>
                 <div class="coupon-condition">
                     <p th:text="${coupon.amt_noles}"></p>
@@ -27,9 +27,10 @@
         <div class="coupon-right">
             <div class="coupon-inner">
                 <div class="coupon-time">
-                    优惠券类型<br/>
-                    <span th:if="${coupon.amt_type==1}">折扣</span>
-					<span th:if="${coupon.amt_type==2}">现金</span>
+                    有效时间<br/>
+                    <!--<span th:if="${coupon.amt_type>1}">现金</span>
+					<span th:if="${coupon.amt_type<1}">折扣</span>-->
+                    <span th:text="${coupon.valid_date}"></span>
                 </div>
                 <i class="coupon-circle top"></i>
                 <i class="coupon-circle bottom"></i>

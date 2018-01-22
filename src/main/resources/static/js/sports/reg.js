@@ -35,20 +35,21 @@ function getStoreInfo(coordinate){
         }
         //var data=JSON.parse(result);
         if(data.status=1){
-            setStoreList(data.lists);
+            var storenumber=data.item.storenumber;
+            setStoreList(data.lists,storenumber);
         }else{
             dialog.toast(data.msg, 1500);
         }
     })
 }
 
-function setStoreList(list){
+function setStoreList(list,storenumber){
     var storeid=$("#storeid");
     storeid.empty();
     var option=$('<option value="" >请选择</option>');
 
     storeid.append(option);
-    for(var i in list){
+    for(var i=0;i<storenumber;i++){
         var distance=list[i].distance;
         if(distance){
             option=$('<option value="'+list[i].id+'">'+list[i].name+'('+distance+'km)'+'</option>');

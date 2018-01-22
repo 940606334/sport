@@ -174,12 +174,10 @@ public class UserController {
         Integer status=(Integer)JSONPath.read(json,"$.status");
         if(status==1){
             JSONArray list=(JSONArray) JSONPath.read(json,"$.lists");
-            if(list.size()==0){
-                model.addAttribute("message","无可用的优惠券");
-            }
             model.addAttribute("list",list);
         }else{
-            model.addAttribute("message","找不到记录");
+            String msg=(String)JSONPath.read(json,"$.msg");
+            model.addAttribute("message",msg);
         }
         return "user/coupon";
     }

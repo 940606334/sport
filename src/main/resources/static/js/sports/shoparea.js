@@ -81,19 +81,19 @@ function ajaxloadinfo(coordinate){
     var url="/getStore?coordinate="+coordinate;
     console.log(coordinate);
     $.get(url,function(json){
-
+        YDUI.dialog.loading.close();
         if(json.status==1){
-            setStoreInfoList(json.lists);
+            var storenumber=json.item.storenumber;
+            setStoreInfoList(json.lists,storenumber);
         }else{
-            YDUI.dialog.loading.close();
             YDUI.dialog.toast("加载失败",1500);
         }
     });
 }
-function setStoreInfoList(list){
+function setStoreInfoList(list,storenumber){
     var $list=$("#list");
     //console.log(list);
-    for(var i in list){
+    for(var i=0;i<storenumber;i++){
         var $store=$("#store").clone().show();
         $store.find(".name").html(list[i].name);
         $store.find(".address").html(list[i].address);
@@ -104,7 +104,7 @@ function setStoreInfoList(list){
         $store.find("input[name=coordinate]").val(list[i].coordinate);
         $store.appendTo($list);
     }
-    YDUI.dialog.loading.close();
+    //YDUI.dialog.loading.close();
     //setClickThing();
 }
 

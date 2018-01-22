@@ -82,4 +82,11 @@ public class PageController {
         logger.info("解码后的跳转地址为:"+pageurl);
         return pageurl;
     }
+    /**
+     * 敬请期待
+     */
+    @RequestMapping("toexpect")
+    public String expect(){
+        return  "sport/empty";
+    }
 }

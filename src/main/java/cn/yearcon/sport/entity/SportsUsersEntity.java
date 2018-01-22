@@ -32,4 +32,6 @@ public class SportsUsersEntity {
     private String privilege;
     @Transient
     private String integral;
+    @Transient
+    private String coupon;
 }

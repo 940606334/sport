@@ -50,12 +50,16 @@
 
             <div class="cell-item">
                 <div class="cell-left">* 生日 <i style="padding-right: 45px;"></i></div>
-                <div class="cell-right" th:text="${map.birthday}"></div>
+                <div class="cell-right">
+                    <input type="text" class="cell-input" th:value="${map.birthday}" th:readonly="true"/>
+                </div>
             </div>
 
             <div class="cell-item">
                 <div class="cell-left">* 服务店仓 <i style="padding-right: 15px;"></i></div>
-                <div class="cell-right" th:text="${map.storename}"></div>
+                <div class="cell-right">
+                    <input type="text" class="cell-input" th:value="${map.storename}" th:readonly="true"/>
+                </div>
 
             </div>
 

@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title>打赏点评</title>
-		<link rel="stylesheet" type="text/css" href="css/default.css"/>
-    	<link rel="stylesheet" href="css/style.css?a=1"/>
+		<link rel="stylesheet" type="text/css" href="/css/default.css"/>
+    	<link rel="stylesheet" href="/css/style.css?a=1"/>
     	<style>
         .cd-form {
             width: 90%;
@@ -25,12 +25,15 @@
 			border:1px solid #CCC;
 			background:#FFF;
         }
-    </style>
+    	</style>
+		<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="/js/layer/layer.js" rel="script"></script>
+		<script src="/js/sports/givereward.js"></script>
 	</head>
 	<body>
 		<div class="container">
 			
-			<form action="#" method="post" class="cd-form floating-labels">
+			<form action="/saveGivereward" method="post" class="cd-form floating-labels" id="giverewarForm">
 				<h4>
 			    <p>感谢您一直以来对意尔康的大力支持!</p>
 			  </h4>
@@ -38,7 +41,7 @@
 				<input type="hidden" name="vipid" th:value="${sportsGivereward.vipid}"/>
 				<input type="hidden" name="webid" th:value="${sportsGivereward.webid}"/>
 				<label>打赏积分:</label>
-				<input type="text" name="giveintegral" th:value="${sportsGivereward.giveintegral}"/><br/>
+				<input type="text" name="giveintegral" th:value="${sportsGivereward.giveintegral}" id="giveintegral"/><br/>
 				<ul class="cd-form-list">
 				<li><input type="radio" value="1" name="type" checked="checked"/>
 				<label>满意</label>

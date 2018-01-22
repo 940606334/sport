@@ -2,12 +2,10 @@ package cn.yearcon.sport.web;
 
 import cn.yearcon.sport.entity.SportsSmscodeEntity;
 import cn.yearcon.sport.entity.SportsUsersotherEntity;
+import cn.yearcon.sport.entity.SportsWxEntity;
 import cn.yearcon.sport.entity.SysOfficeEntity;
 import cn.yearcon.sport.json.JsonResult;
-import cn.yearcon.sport.service.SportApiService;
-import cn.yearcon.sport.service.SportsSmscodeService;
-import cn.yearcon.sport.service.SportsUsersotherService;
-import cn.yearcon.sport.service.SysOfficeService;
+import cn.yearcon.sport.service.*;
 import cn.yearcon.sport.utils.CookieUtil;
 import com.alibaba.fastjson.JSONPath;
 import com.google.gson.Gson;
@@ -25,6 +23,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author itguang
@@ -39,6 +39,8 @@ public class RegController {
     private SysOfficeService sysOfficeService;
     @Autowired
     private SportsUsersotherService sportsUsersotherService;
+    @Autowired
+    private SportsWxService sportsWxService;
 
     //注册页面
     @RequestMapping(value="/reg",method = RequestMethod.GET)
@@ -71,6 +73,21 @@ public class RegController {
         logger.info("json="+json);
         JsonResult jsonResult=new Gson().fromJson(json,JsonResult.class);
         logger.info("jsonResult="+jsonResult);
+        logger.info("获取门店列表");
+        SportsWxEntity byWebid = sportsWxService.findByWebid(Integer.parseInt(webid));
+        logger.info("微信公众号信息:"+byWebid);
+        Integer storenumber=byWebid.getStorenumber();
+        Map map=new HashMap();
+        if(storenumber==null){
+            if(jsonResult.getLists().size()>30){
+                map.put("storenumber",30);
+            }else{
+                map.put("storenumber",storenumber);
+            }
+        }else{
+            map.put("storenumber",storenumber);
+        }
+        jsonResult.setItem(map);
         return jsonResult;
     }
     @Autowired

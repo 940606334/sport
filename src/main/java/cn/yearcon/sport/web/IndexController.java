@@ -9,9 +9,12 @@ import cn.yearcon.sport.service.SysOfficeService;
 import cn.yearcon.sport.utils.BarcodeUtil;
 import cn.yearcon.sport.utils.CookieUtil;
 import cn.yearcon.sport.utils.HttpRequestUtils;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONPath;
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -26,6 +29,7 @@ import java.io.IOException;
 
 @Controller
 public class IndexController {
+    private final Logger logger= LoggerFactory.getLogger(this.getClass());
     @Autowired
     SportApiService sportApiService;
 
@@ -38,8 +42,18 @@ public class IndexController {
             return "redirect:/wechat/authorize";
         }
         String json=sportApiService.getVipInfoByid(vipid);
+        logger.info("会员信息:"+json);
         String integral = (String) JSONPath.read(json, "$.item.integral");
         sportsUsersEntity.setIntegral(integral);
+        json=sportApiService.getCouponList(vipid);
+        logger.info("购物券列表:"+json);
+        Integer status=(Integer)JSONPath.read(json,"$.status");
+        if(status==1){
+            JSONArray list=(JSONArray) JSONPath.read(json,"$.lists");
+            sportsUsersEntity.setCoupon(list.size()+"");
+        }else{
+            sportsUsersEntity.setCoupon("0");
+        }
         model.addAttribute("user",sportsUsersEntity);
         cookie=CookieUtil.get(request,"url");
         if (cookie!=null){
