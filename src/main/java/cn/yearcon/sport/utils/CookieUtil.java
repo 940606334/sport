@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author itguang
+ * @author ayong
  * @create 2017-12-04 10:40
  **/
 public class CookieUtil {

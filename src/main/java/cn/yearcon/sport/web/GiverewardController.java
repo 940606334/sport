@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * @create 2018-01-17 16:56
  **/
 @Controller
+@RequestMapping(value = "user")
 public class GiverewardController {
 
     @RequestMapping(value = "givereward")

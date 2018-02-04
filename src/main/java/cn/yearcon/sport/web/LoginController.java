@@ -85,7 +85,7 @@ public class LoginController {
                 CookieUtil.set(response,"regorloginUrl","/login");
                 return "redirect:/login";
             }
-            vipid=(Integer) JSONPath.read(json,"$.vipid");
+            vipid=(Integer) JSONPath.read(json,"$.msg");
             //CookieUtil.set(response,"vipid",vipid.toString());
             //保存用户信息
             logger.info("保存vipid为"+vipid+"的用户信息");
