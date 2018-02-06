@@ -92,17 +92,14 @@ function checkvipinfo(){
         return false;
     }
     var vipsex=$("#vipsex").val();
+    console.log(vipsex);
     if(!vipsex){
         dialog.toast('请选择性别', 1500);
         return false;
     }
-    /*var vipsize=$("#vipsize").val();
-    if(!vipsize){
-        dialog.toast("请输入鞋码",1500);
-        return false;
-    }*/
     var birthday=$("#showDate").html();
-    if(!birthday){
+    console.log(birthday);
+    if(birthday=='请选择时间'){
         dialog.toast("请选择时间",1500);
         return false;
     }

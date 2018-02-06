@@ -53,6 +53,7 @@ public class SportsUsersotherService {
             entity.setAddtime(new Date());
             entity.setCarttype(cardtype);
             entity.setStorename(getStorename(vipid));
+            entity.setVipbirthday(parseDate(entity.getVipbirthday()));
             sportsUsersotherRepository.save(entity);
         }
 
