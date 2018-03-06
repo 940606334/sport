@@ -1,11 +1,8 @@
 package cn.yearcon.sport.util;
 
-import cn.yearcon.sport.utils.UrlUtil;
+import cn.yearcon.sport.common.utils.UrlUtil;
 import org.junit.Test;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
