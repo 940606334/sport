@@ -1,6 +1,6 @@
 package cn.yearcon.sport.modules.web;
 
-import cn.yearcon.sport.modules.service.SportsUserService;
+import cn.yearcon.sport.modules.service.sport.SportsUserService;
 import cn.yearcon.sport.common.utils.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

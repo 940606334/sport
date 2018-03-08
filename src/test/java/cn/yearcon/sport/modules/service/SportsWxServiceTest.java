@@ -1,7 +1,7 @@
 package cn.yearcon.sport.modules.service;
 
 import cn.yearcon.sport.modules.entity.sport.SportsWxEntity;
-import cn.yearcon.sport.modules.repository.SportsWxRepository;
+import cn.yearcon.sport.modules.repository.sport.SportsWxRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

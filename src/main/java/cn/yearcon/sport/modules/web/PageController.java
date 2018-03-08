@@ -1,8 +1,8 @@
 package cn.yearcon.sport.modules.web;
 
 import cn.yearcon.sport.modules.entity.sport.SportsWebpageEntity;
-import cn.yearcon.sport.modules.service.SportsWebpageService;
-import cn.yearcon.sport.modules.service.SportsWxService;
+import cn.yearcon.sport.modules.service.sport.SportsWebpageService;
+import cn.yearcon.sport.modules.service.sport.SportsWxService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -10,7 +10,7 @@ package cn.yearcon.sport.common.scheduler;
 import cn.yearcon.sport.common.json.WxResult;
 import cn.yearcon.sport.common.utils.HttpRequestUtils;
 import cn.yearcon.sport.modules.entity.sport.SportsSecretEntity;
-import cn.yearcon.sport.modules.service.SportsSecretService;
+import cn.yearcon.sport.modules.service.sport.SportsSecretService;
 import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

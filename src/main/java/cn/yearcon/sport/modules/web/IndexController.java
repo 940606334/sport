@@ -1,11 +1,11 @@
 package cn.yearcon.sport.modules.web;
 
-import cn.yearcon.sport.modules.entity.sport.SportsUsersEntity;
-import cn.yearcon.sport.modules.entity.sport.SportsUsersotherEntity;
-import cn.yearcon.sport.modules.service.SportApiService;
-import cn.yearcon.sport.modules.service.SportsUserService;
-import cn.yearcon.sport.modules.service.SportsUsersotherService;
-import cn.yearcon.sport.modules.service.SysOfficeService;
+import cn.yearcon.sport.modules.entity.sport.user.SportsUsersEntity;
+import cn.yearcon.sport.modules.entity.sport.user.SportsUsersotherEntity;
+import cn.yearcon.sport.modules.service.sport.SportApiService;
+import cn.yearcon.sport.modules.service.sport.SportsUserService;
+import cn.yearcon.sport.modules.service.sport.SportsUsersotherService;
+import cn.yearcon.sport.modules.service.sys.SysOfficeService;
 import cn.yearcon.sport.common.utils.BarcodeUtil;
 import cn.yearcon.sport.common.utils.CookieUtil;
 import com.alibaba.fastjson.JSONArray;

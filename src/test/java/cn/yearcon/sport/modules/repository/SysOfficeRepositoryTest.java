@@ -1,6 +1,7 @@
 package cn.yearcon.sport.modules.repository;
 
 import cn.yearcon.sport.modules.entity.sys.SysOfficeEntity;
+import cn.yearcon.sport.modules.repository.sys.SysOfficeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

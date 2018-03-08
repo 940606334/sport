@@ -2,13 +2,14 @@ package cn.yearcon.sport.modules.web;
 
 import cn.yearcon.sport.modules.entity.weixin.WechatUser;
 import cn.yearcon.sport.modules.entity.sport.SportsSecretEntity;
-import cn.yearcon.sport.modules.entity.sport.SportsUsersEntity;
-import cn.yearcon.sport.modules.entity.sport.SportsUsersotherEntity;
+import cn.yearcon.sport.modules.entity.sport.user.SportsUsersEntity;
+import cn.yearcon.sport.modules.entity.sport.user.SportsUsersotherEntity;
 import cn.yearcon.sport.common.json.ResultEnum;
 import cn.yearcon.sport.common.exception.SportException;
 import cn.yearcon.sport.common.utils.CookieUtil;
 import cn.yearcon.sport.common.utils.Sign;
-import cn.yearcon.sport.modules.service.*;
+import cn.yearcon.sport.modules.service.sport.*;
+import cn.yearcon.sport.modules.service.sys.SysOfficeService;
 import com.alibaba.fastjson.JSONPath;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;

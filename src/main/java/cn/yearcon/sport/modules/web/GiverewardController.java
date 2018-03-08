@@ -1,7 +1,7 @@
 package cn.yearcon.sport.modules.web;
 
-import cn.yearcon.sport.modules.entity.sport.SportsGivereward;
-import cn.yearcon.sport.modules.service.SportsGiverewardService;
+import cn.yearcon.sport.modules.entity.sport.user.SportsGivereward;
+import cn.yearcon.sport.modules.service.sport.SportsGiverewardService;
 import cn.yearcon.sport.common.utils.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 

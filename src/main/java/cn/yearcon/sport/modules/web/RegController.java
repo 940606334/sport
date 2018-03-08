@@ -1,12 +1,16 @@
 package cn.yearcon.sport.modules.web;
 
 import cn.yearcon.sport.modules.entity.sport.SportsSmscodeEntity;
-import cn.yearcon.sport.modules.entity.sport.SportsUsersotherEntity;
+import cn.yearcon.sport.modules.entity.sport.user.SportsUsersotherEntity;
 import cn.yearcon.sport.modules.entity.sport.SportsWxEntity;
 import cn.yearcon.sport.modules.entity.sys.SysOfficeEntity;
 import cn.yearcon.sport.common.json.JsonResult;
 import cn.yearcon.sport.common.utils.CookieUtil;
-import cn.yearcon.sport.modules.service.*;
+import cn.yearcon.sport.modules.service.sport.SportApiService;
+import cn.yearcon.sport.modules.service.sport.SportsSmscodeService;
+import cn.yearcon.sport.modules.service.sport.SportsUsersotherService;
+import cn.yearcon.sport.modules.service.sport.SportsWxService;
+import cn.yearcon.sport.modules.service.sys.SysOfficeService;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
