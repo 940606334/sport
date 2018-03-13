@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>打赏</title>
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+	    <meta content="yes" name="apple-mobile-web-app-capable"/>
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+	    <meta content="telephone=no" name="format-detection"/>
+	    <link rel="stylesheet" href="demo/css/ydui.css?rev=@@hash"/>
+	    <link rel="stylesheet" href="demo/css/demo.css"/>
+	    <script src="demo/js/ydui.flexible.js"></script>
+	</head>
+	<body>
+		<section class="g-flexview">
+
+   
+    	<section class="g-scrollview">
+
+         <!--<aside class="demo-tip" style="text-align: center; font-size: 0.5rem;margin-top: 0.5rem;">
+			
+        </aside>-->
+		<div class="m-celltitle" style="text-align: center; font-size: 0.5rem;margin-top: 0.5rem;" >
+			<p>打赏成功<i class="icon-checkoff"></i></p>
+			<span style="font-size:18px;" id="sp">3</span>秒钟后自动跳转
+			<a href="/index" class="c-primary ml-20">首页</a>
+			</p>
+			  
+		</div>
+	         
+	</section>
+
+</section>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="demo/js/ydui.js"></script>
+</body>
+<script type="text/javascript">
+    onload=function(){  
+        setInterval(go, 1000);  
+    };  
+    var x=3; //利用了全局变量来执行  
+    function go(){  
+    x--;  
+        if(x>0){  
+        document.getElementById("sp").innerHTML=x;  //每次设置的x的值都不一样了。  
+        }else{  
+        location.href='/index';
+        }  
+    }  
+</script>  
+</html>

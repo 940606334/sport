@@ -1,5 +1,5 @@
 server:
-  port: 8002
+  port: 80
   context-path:
   session:
     cookie:
@@ -27,7 +27,7 @@ spring:
       min-idle: 0
     timeout: 0
 
-interfaceUrl: http://10.3.1.83:8001/
+interfaceUrl: http://localhost:8001/
 groupbuyPagecode: 4
 cardtype: 积分卡
 aboutusPagecode: 2

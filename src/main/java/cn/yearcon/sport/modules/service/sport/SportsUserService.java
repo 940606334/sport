@@ -1,10 +1,14 @@
 package cn.yearcon.sport.modules.service.sport;
 
 import cn.yearcon.sport.common.json.JsonResult;
+import cn.yearcon.sport.modules.entity.sport.store.StoreIntegral;
+import cn.yearcon.sport.modules.entity.sport.user.SportsAuthor;
+import cn.yearcon.sport.modules.entity.sport.user.SportsUsersotherEntity;
 import cn.yearcon.sport.modules.entity.weixin.WechatUser;
 import cn.yearcon.sport.modules.entity.sport.user.SportsUsersEntity;
 import cn.yearcon.sport.common.exception.ServiceException;
 import cn.yearcon.sport.modules.repository.sport.SportsUsersRepository;
+import cn.yearcon.sport.modules.service.store.StoreIntegralService;
 import com.alibaba.fastjson.JSONPath;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +63,44 @@ public class SportsUserService {
         String areaCode=(String) JSONPath.read(json, "$.item.c_customer_id");
         sportsUsersEntity.setWebid(Integer.parseInt(areaCode));
         sportsUsersRepository.save(sportsUsersEntity);
-
+        //首次认证赠送积分
+        SportsAuthor byId = sportsAuthorService.findById(Integer.parseInt(vipid));
+        if(byId==null){
+            giveIntegral(vipid);
+        }
     }
+    @Autowired
+    private SportsAuthorService sportsAuthorService;
+
+    @Autowired
+    private  SportsUsersotherService sportsUserotherService;
+    @Autowired
+    private StoreIntegralService storeIntegralService;
+    /**
+     * 根据条件判断是否
+     * 赠送积分
+     * @param
+     */
+    private void giveIntegral(String vipid){
+        SportsUsersotherEntity entity = sportsUserotherService.findById(Integer.parseInt(vipid));
+        String storeid=entity.getStoreid().toString();
+        StoreIntegral storeIntegral=storeIntegralService.findById(storeid);
+        //类型不是认证会员送积分
+        if(!"2".equals(storeIntegral.getType())){
+            return;
+        }
+        //有期限并且开卡时间不在活动时间范围内
+        if("1".equals(storeIntegral.getAvailable())){
+            if(entity.getAddtime().getTime()<storeIntegral.getBeginDate().getTime()||
+                    entity.getAddtime().getTime()>storeIntegral.getEndDate().getTime()){
+                return;
+            }
+        }
+        sportApiService.addIntegral(vipid, storeIntegral.getAddIntegral(), "新认证会员送积分");
+        SportsAuthor sportsAuthor=new SportsAuthor(Integer.parseInt(vipid),"1");
+        sportsAuthorService.save(sportsAuthor);
+    }
+
     /**根据vipid查询会员信息*/
     public SportsUsersEntity findByVipid(Integer vipid){
         return sportsUsersRepository.findOne(vipid);

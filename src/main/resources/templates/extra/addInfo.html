@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>新开卡注册</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link rel="stylesheet" href="/css/ydui/ydui.css?rev=@@hash"/>
+    <link rel="stylesheet" href="/css/ydui/demo.css"/>
+    <script src="/js/ydui/ydui.flexible.js"></script>
+</head>
+<body>
+<section class="g-flexview">
+
+   
+    <section class="g-scrollview">
+
+         <aside class="demo-tip">
+			<p>根据完善的内容情况，赠送3积分；<br>
+			</p>
+        </aside>
+
+        <form action="/vip/addInfo" method="post" id="addInfoForm">
+        <div class="m-cell">
+            <input type="hidden" name="vipid" th:value="${sportsExtrainfo.vipid}"/>
+        	<div class="cell-item">
+                <div class="cell-left">* 邮箱 <i style="padding-right: 105px;"></i></div>
+                <div class="cell-right">
+                    <input id="email" name="email" type="text" class="cell-input" placeholder="请填写邮箱" autocomplete="off" th:value="${sportsExtrainfo.email}" />
+                </div>
+            </div>
+            <div class="cell-item">
+                <div class="cell-left">* 微博号码 <i style="padding-right: 75px;"></i></div>
+                <div class="cell-right"><input id="weblog" name="weblog" type="text" class="cell-input" placeholder="请填写微博号码" autocomplete="off" th:value="${sportsExtrainfo.weblog}"/></div>
+            </div>
+            <div class="cell-item">
+                <div class="cell-left">* QQ号码 &nbsp;&nbsp;<i style="padding-right: 75px;"></i></div>
+                <div class="cell-right"><input id="qq" name="qq" type="text" class="cell-input" placeholder="请填写QQ号码" autocomplete="off" th:value="${sportsExtrainfo.qq}" /></div>
+            </div>
+            <!--<div class="cell-item">
+                <div class="cell-left">* 鞋码 <i style="padding-right: 75px;"></i></div>
+                <label class="cell-right cell-arrow">
+                    <select class="cell-select">
+                        <option value="">请选择</option>
+                        <option value="38">39</option>
+                        <option value="39">39</option>
+                        <option value="40">40</option>
+                    </select>
+                </label>
+            </div>-->
+        </div>
+        </form>
+	 <div class="m-button demo-pitch">
+	            <a href="javascript:;" class="btn-block btn-primary" id="save_info">保存</a>
+	        </div>
+	         <!--<div class="m-button demo-pitch">
+	            <a href="login.html" class="btn-block btn-hollow" id="J_OpenKeyBoard">我已开卡</a>
+	        </div>-->
+	</section>
+
+</section>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/ydui/ydui.js"></script>
+<script src="/js/sports/user/addInfo.js"></script>
+
+</body>
+</html>

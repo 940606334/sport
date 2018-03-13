@@ -2,6 +2,7 @@ package cn.yearcon.sport.modules.service.sport;
 
 import cn.yearcon.sport.modules.entity.RegVip;
 import cn.yearcon.sport.modules.entity.sport.store.StoreIntegral;
+import cn.yearcon.sport.modules.entity.sport.user.SportsAuthor;
 import cn.yearcon.sport.modules.entity.sport.user.SportsUsersotherEntity;
 import cn.yearcon.sport.common.exception.ServiceException;
 import cn.yearcon.sport.common.json.JsonResult;
@@ -34,6 +35,14 @@ public class SportsUsersotherService {
     @Autowired
     private SportsUserService sportsUserService;
 
+    /**
+     * 根据id查询
+     * @param vipid
+     * @return
+     */
+    public  SportsUsersotherEntity findById(Integer vipid){
+        return sportsUsersotherRepository.findOne(vipid);
+    }
     /**注册会员*/
     public void regvip(SportsUsersotherEntity entity,HttpServletResponse response){
         if(entity==null){
@@ -59,6 +68,8 @@ public class SportsUsersotherService {
             //赠送积分
             giveIntegral(entity);
 
+
+
         }
 
     }
@@ -68,7 +79,7 @@ public class SportsUsersotherService {
      * 赠送积分
      * @param entity
      */
-    public void giveIntegral(SportsUsersotherEntity entity){
+    private void giveIntegral(SportsUsersotherEntity entity){
         String storeid=entity.getStoreid().toString();
         StoreIntegral storeIntegral=storeIntegralService.findById(storeid);
         //类型不是开卡送积分
@@ -82,7 +93,7 @@ public class SportsUsersotherService {
                 return;
             }
         }
-        sportApiService.addIntegral(entity.getVipid().toString(), storeIntegral.getAddIntegral(), "新注册会员");
+        sportApiService.addIntegral(entity.getVipid().toString(), storeIntegral.getAddIntegral(), "新注册会员送积分");
     }
 
     @Autowired

@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $("#sendMsg").click(doGivereward);
+    $("#save_info").click(doGivereward);
 })
 function doGivereward() {
     var b=checkGivereward();
@@ -12,15 +12,14 @@ function checkGivereward() {
     if(!integral){
         var reg=/^[1-9]\d*$/;
         if(!reg.test(integral)){
-            layer.alert("只能输入正整数");
+            YDUI.dialog.toast("只能输入正整数", 'error', 1500);
             return false;
         }
     }
-
-    var type=$("input[name=type]").val();
+   /* var type=$("input[name=type]").val();
     if(!type){
         layer.alert("请选择");
         return false;
-    }
+    }*/
     return true;
 }

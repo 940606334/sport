@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>打赏</title>
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+		<meta content="yes" name="apple-mobile-web-app-capable"/>
+		<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+		<meta content="telephone=no" name="format-detection"/>
+		<link rel="stylesheet" href="/css/ydui/ydui.css?rev=@@hash"/>
+		<link rel="stylesheet" href="/css/ydui/demo.css"/>
+		<script src="/js/ydui/ydui.flexible.js"></script>
+</head>
+<body>
+<section class="g-flexview">
+
+
+	<section class="g-scrollview">
+
+		<aside class="demo-tip">
+			<p>用积分作为打赏的金额，最高限制为5积分<br/>
+			</p>
+		</aside>
+
+		<th:form action="/vip/saveGivereward" method="post" id="giverewarForm">
+		<input type="hidden" name="webid" th:value="${sportsGivereward.webid}"/>
+		<input type="hidden" name="vipid" th:value="${sportsGivereward.vipid}"/>
+		<input type="hidden" name="guideid" th:value="${sportsGivereward.guideid}"/>
+        <div class="m-cell">
+        	<div class="cell-item">
+                <div class="cell-left"> 打赏积分 </div>
+                <div class="cell-right">
+                	<span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del',max:'5',min:'0'}"><!-- 添加data-ydui-spinner属性并添加参数即可 -->
+					    <a href="javascript:;" class="J_Del"></a>
+					    <input type="text" name="giveintegral" class="J_Input" placeholder=""/>
+					    <a href="javascript:;" class="J_Add"></a>
+					</span>
+                </div>
+            </div>
+            <div class="cell-item">
+                <div  class="cell-right"> 
+                	<textarea class="cell-textarea" name="explain" placeholder="备注说明"></textarea>
+                </div>
+            </div>
+              
+            
+        </div>
+		</th:form>
+	 	<div class="m-button demo-pitch">
+	            <a href="javascript:;" class="btn-block btn-primary" id="save_info">提交</a>
+	   </div>
+	         <!--<div class="m-button demo-pitch">
+	            <a href="login.html" class="btn-block btn-hollow" id="J_OpenKeyBoard">我已开卡</a>
+	        </div>-->
+	</section>
+
+</section>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/js/ydui/ydui.js"></script>
+<script src="/js/sports/givereward.js"></script>
+</body>
+</html>
