@@ -2,6 +2,7 @@ package cn.yearcon.sport.modules.service.sport;
 
 import cn.yearcon.sport.modules.entity.sport.user.SportsGivereward;
 import cn.yearcon.sport.modules.repository.sport.SportsGiverewardDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class SportsGiverewardService {
+    @Autowired
     private SportsGiverewardDao sportsGiverewardDao;
 
     /**

@@ -35,5 +35,9 @@ public class SysOfficeService {
         }
     }
 
+    public  SysOfficeEntity findByCode(String code){
+        return sysOfficeRepository.findOneByCode(code);
+    }
+
 
 }

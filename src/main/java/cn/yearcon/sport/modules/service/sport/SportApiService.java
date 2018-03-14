@@ -149,4 +149,14 @@ public class SportApiService {
         return new HttpRequestUtils().getHttp(url);
     }
 
+    /**
+     * 发送短信
+     * @param mobile
+     * @param content
+     * @return
+     */
+    public String sendSmsMsg(String mobile,String content){
+        String url=interfaceUrl+"sms.send?mobile="+mobile+"&content="+content;
+        return new HttpRequestUtils().getHttp(url);
+    }
 }

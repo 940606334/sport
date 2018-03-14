@@ -15,7 +15,7 @@ function checkFormData() {
         return false;
     }
     if(!regemail.test(email)){
-        YDUI.dialog.toast('邮箱格式不对', 'error', 1500)
+        YDUI.dialog.toast('邮箱格式不对', 'error', 1500);
         return false;
     }
     var weblog=$("#weblog").val();
