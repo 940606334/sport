@@ -1,6 +1,8 @@
 package cn.yearcon.sport.modules.web;
 
+import cn.yearcon.sport.modules.entity.sport.SportsPageEntity;
 import cn.yearcon.sport.modules.entity.sport.SportsWebpageEntity;
+import cn.yearcon.sport.modules.service.sport.SportsPageService;
 import cn.yearcon.sport.modules.service.sport.SportsWebpageService;
 import cn.yearcon.sport.modules.service.sport.SportsWxService;
 import org.slf4j.Logger;
@@ -42,7 +44,7 @@ public class PageController {
      */
     @RequestMapping(value = "aboutus")
     public String toAboutus(HttpServletRequest request){
-       String pageurl=getUrl(request,aboutusPagecode);
+       String pageurl=getUrl(2);
 
         return "redirect:"+pageurl;
     }
@@ -54,7 +56,7 @@ public class PageController {
      */
     @RequestMapping(value = "privilege")
     public String toPrivilege(HttpServletRequest request){
-        String pageurl=getUrl(request,privilegePagecode);
+        String pageurl=getUrl(1);
         return "redirect:"+pageurl;
     }
 
@@ -65,7 +67,7 @@ public class PageController {
      */
     @RequestMapping(value = "classroom")
     public String toClassroom(HttpServletRequest request){
-        String pageurl=getUrl(request,classroomPagecode);
+        String pageurl=getUrl(3);
         return "redirect:"+pageurl;
     }
     public String getUrl(HttpServletRequest request,String pagecode){
@@ -80,6 +82,19 @@ public class PageController {
         logger.info("解码后的跳转地址为:"+pageurl);
         return pageurl;
     }
+    @Autowired
+    private SportsPageService sportsPageService;
+    public String getUrl(Integer id){
+        SportsPageEntity one = sportsPageService.findOne(id);
+        String pageurl="/index";
+        if(one!=null){
+            pageurl=one.getUrl();
+        }
+        pageurl= pageurl.replaceAll("&amp;","&");
+        logger.info("解码后的跳转地址为:"+pageurl);
+        return pageurl;
+    }
+
     /**
      * 敬请期待
      */

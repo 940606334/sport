@@ -14,14 +14,14 @@ import java.util.Objects;
 @Table(name = "sports_givereward", schema = "sports", catalog = "")
 public class SportsGivereward {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String guideid;
     private Integer webid;
     private Integer vipid;
     private Integer giveintegral;
     private String type;
-    private String explain;
+    private String remark;
 
 
 
@@ -37,12 +37,25 @@ public class SportsGivereward {
                 Objects.equals(vipid, that.vipid) &&
                 Objects.equals(giveintegral, that.giveintegral) &&
                 Objects.equals(type, that.type) &&
-                Objects.equals(explain, that.explain);
+                Objects.equals(remark, that.remark);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, guideid, webid, vipid, giveintegral, type, explain);
+        return Objects.hash(id, guideid, webid, vipid, giveintegral, type, remark);
+    }
+
+    @Override
+    public String toString() {
+        return "SportsGivereward{" +
+                "id=" + id +
+                ", guideid='" + guideid + '\'' +
+                ", webid=" + webid +
+                ", vipid=" + vipid +
+                ", giveintegral=" + giveintegral +
+                ", type='" + type + '\'' +
+                ", explain='" + remark + '\'' +
+                '}';
     }
 }

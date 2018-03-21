@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 8002
   context-path:
   session:
     cookie:
@@ -9,7 +9,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: abc123
-    url: jdbc:mysql://10.3.1.80:3306/sports?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://10.3.1.120:3306/sports?useUnicode=true&characterEncoding=utf-8
   jpa:
     show-sql: true
   mvc:
@@ -27,7 +27,7 @@ spring:
       min-idle: 0
     timeout: 0
 
-interfaceUrl: http://localhost:8001/
+interfaceUrl: http://10.3.1.84:8001/
 groupbuyPagecode: 4
 cardtype: 积分卡
 aboutusPagecode: 2
@@ -36,7 +36,7 @@ privilegePagecode: 1
 
 #logconfig
 logging:
-  file: /usr/java/springbootDemo/sport.log
+  file: /usr/java/jarlogs/sport.log
 
 #http:
 #  maxTotal: 100

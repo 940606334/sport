@@ -22,30 +22,31 @@
 			</p>
 		</aside>
 
-		<th:form action="/vip/saveGivereward" method="post" id="giverewarForm">
+		<form action="/vip/saveGivereward" method="post" id="giverewarForm">
 		<input type="hidden" name="webid" th:value="${sportsGivereward.webid}"/>
 		<input type="hidden" name="vipid" th:value="${sportsGivereward.vipid}"/>
 		<input type="hidden" name="guideid" th:value="${sportsGivereward.guideid}"/>
+		<input type="hidden" id="hasintegral" th:value="${integral}"/>
         <div class="m-cell">
         	<div class="cell-item">
                 <div class="cell-left"> 打赏积分 </div>
                 <div class="cell-right">
                 	<span class="m-spinner" data-ydui-spinner="{input: '.J_Input', add: '.J_Add', minus: '.J_Del',max:'5',min:'0'}"><!-- 添加data-ydui-spinner属性并添加参数即可 -->
 					    <a href="javascript:;" class="J_Del"></a>
-					    <input type="text" name="giveintegral" class="J_Input" placeholder=""/>
+					    <input type="text" name="giveintegral" class="J_Input" placeholder="" id="giveintegral"/>
 					    <a href="javascript:;" class="J_Add"></a>
 					</span>
                 </div>
             </div>
             <div class="cell-item">
                 <div  class="cell-right"> 
-                	<textarea class="cell-textarea" name="explain" placeholder="备注说明"></textarea>
+                	<textarea class="cell-textarea" name="remark" placeholder="备注说明"></textarea>
                 </div>
             </div>
               
             
         </div>
-		</th:form>
+		</form>
 	 	<div class="m-button demo-pitch">
 	            <a href="javascript:;" class="btn-block btn-primary" id="save_info">提交</a>
 	   </div>
@@ -57,6 +58,6 @@
 </section>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="/js/ydui/ydui.js"></script>
-<script src="/js/sports/givereward.js"></script>
+<script src="/js/sports/givereward.js?abc"></script>
 </body>
 </html>

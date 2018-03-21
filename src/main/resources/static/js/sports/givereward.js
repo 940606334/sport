@@ -8,13 +8,15 @@ function doGivereward() {
     }
 }
 function checkGivereward() {
-    var integral=$("#giveintegral");
+    var integral=parseInt($("#giveintegral").val());
     if(!integral){
-        var reg=/^[1-9]\d*$/;
-        if(!reg.test(integral)){
-            YDUI.dialog.toast("只能输入正整数", 'error', 1500);
-            return false;
-        }
+        YDUI.dialog.toast("请输入打赏积分"+integral, 'error', 1500);
+        return false;
+    }
+    var hasintegral=parseInt($("#hasintegral").val());
+    if(integral>hasintegral){
+        YDUI.dialog.toast("您的积分不足", 'error', 1500);
+        return false;
     }
    /* var type=$("input[name=type]").val();
     if(!type){

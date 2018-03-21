@@ -29,8 +29,7 @@ public class SportsWxService {
     private SysOfficeService sysOfficeService;
 
 
-    @Autowired
-    private SportsWxService sportsWxService;
+
 
     public SportsWxEntity findByWebid(Integer webid){
         SportsWxEntity wxEntity = sportsWxRepository.findByWebid(webid);
@@ -49,7 +48,7 @@ public class SportsWxService {
         log.info("serverName={}", serverName);
         SysOfficeEntity officeEntity = sysOfficeService.findOneByAddress(serverName);
         String webid=officeEntity.getCode();
-        SportsWxEntity wxEntity = sportsWxService.findByWebid(Integer.parseInt(webid));
+        SportsWxEntity wxEntity = findByWebid(Integer.parseInt(webid));
         String name=officeEntity.getName();
         //2.通过域名查找 appid 和 appsecret
         String appid = wxEntity.getAppid();
